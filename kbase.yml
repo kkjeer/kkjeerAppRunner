@@ -1,0 +1,9 @@
+module-name: kkjeerHello_World
+
+module-description: A KBase module
+
+service-language: python
+
+module-version: 0.0.2
+
+owners: [kkjeer]

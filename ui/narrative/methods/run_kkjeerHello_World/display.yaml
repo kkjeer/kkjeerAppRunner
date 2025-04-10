@@ -1,0 +1,41 @@
+#
+# define display information
+#
+name: Testing KBParallel
+
+tooltip: |
+  Tests running other apps from within this app using KBParallel
+
+screenshots: []
+
+icon: icon.png
+
+#
+# define a set of similar apps that might be useful to the user
+#
+suggestions:
+  apps:
+    related: [app1, app2]
+    next: [app3, app4]
+
+#
+# Configure the display and description of parameters
+#
+parameters:
+  select_app:
+    ui-name: |
+      App selector
+    short-hint: |
+      Select the name of app(s) to run
+    long-hint: |
+      This is used to select from among (currently hardcoded) apps to run.
+
+parameter-groups:
+  param_group:
+    ui-name: |
+      Param Group
+    short-hint: |
+      Group containing UI elements
+
+description: |
+  <p>Description goes here.</p>
