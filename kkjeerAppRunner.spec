@@ -1,8 +1,8 @@
 /*
-A KBase module: kkjeerHello_World
+A KBase module: kkjeerAppRunner
 */
 
-module kkjeerHello_World {
+module kkjeerAppRunner {
     typedef structure {
         string report_name;
         string report_ref;
@@ -11,6 +11,6 @@ module kkjeerHello_World {
     /*
         This example function accepts any number of parameters and returns results in a KBaseReport
     */
-    funcdef run_kkjeerHello_World(mapping<string,UnspecifiedObject> params) returns (ReportResults output) authentication required;
+    funcdef run_kkjeerAppRunner(mapping<string,UnspecifiedObject> params) returns (ReportResults output) authentication required;
 
 };

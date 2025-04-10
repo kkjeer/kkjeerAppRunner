@@ -4,14 +4,14 @@ import time
 import unittest
 from configparser import ConfigParser
 
-from kkjeerHello_World.kkjeerHello_WorldImpl import kkjeerHello_World
-from kkjeerHello_World.kkjeerHello_WorldServer import MethodContext
-from kkjeerHello_World.authclient import KBaseAuth as _KBaseAuth
+from kkjeerAppRunner.kkjeerAppRunnerImpl import kkjeerAppRunner
+from kkjeerAppRunner.kkjeerAppRunnerServer import MethodContext
+from kkjeerAppRunner.authclient import KBaseAuth as _KBaseAuth
 
 from installed_clients.WorkspaceClient import Workspace
 
 
-class kkjeerHello_WorldTest(unittest.TestCase):
+class kkjeerAppRunnerTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -20,7 +20,7 @@ class kkjeerHello_WorldTest(unittest.TestCase):
         cls.cfg = {}
         config = ConfigParser()
         config.read(config_file)
-        for nameval in config.items('kkjeerHello_World'):
+        for nameval in config.items('kkjeerAppRunner'):
             cls.cfg[nameval[0]] = nameval[1]
         # Getting username from Auth profile for token
         authServiceUrl = cls.cfg['auth-service-url']
@@ -32,14 +32,14 @@ class kkjeerHello_WorldTest(unittest.TestCase):
         cls.ctx.update({'token': token,
                         'user_id': user_id,
                         'provenance': [
-                            {'service': 'kkjeerHello_World',
+                            {'service': 'kkjeerAppRunner',
                              'method': 'please_never_use_it_in_production',
                              'method_params': []
                              }],
                         'authenticated': 1})
         cls.wsURL = cls.cfg['workspace-url']
         cls.wsClient = Workspace(cls.wsURL)
-        cls.serviceImpl = kkjeerHello_World(cls.cfg)
+        cls.serviceImpl = kkjeerAppRunner(cls.cfg)
         cls.scratch = cls.cfg['scratch']
         cls.callback_url = os.environ['SDK_CALLBACK_URL']
         suffix = int(time.time() * 1000)
@@ -63,6 +63,6 @@ class kkjeerHello_WorldTest(unittest.TestCase):
         #
         # Check returned data with
         # self.assertEqual(ret[...], ...) or other unittest methods
-        ret = self.serviceImpl.run_kkjeerHello_World(self.ctx, {'workspace_name': self.wsName,
+        ret = self.serviceImpl.run_kkjeerAppRunner(self.ctx, {'workspace_name': self.wsName,
                                                              'parameter_1': 'Hello World!', 'parameter_2': 'Second param'})
         print ("report_name", ret[0]['report_name'])

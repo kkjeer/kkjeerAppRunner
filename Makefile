@@ -1,7 +1,7 @@
-SERVICE = kkjeerhello_world
-SERVICE_CAPS = kkjeerHello_World
-SPEC_FILE = kkjeerHello_World.spec
-URL = https://kbase.us/services/kkjeerhello_world
+SERVICE = kkjeerapprunner
+SERVICE_CAPS = kkjeerAppRunner
+SPEC_FILE = kkjeerAppRunner.spec
+URL = https://kbase.us/services/kkjeerapprunner
 DIR = $(shell pwd)
 LIB_DIR = lib
 SCRIPTS_DIR = scripts

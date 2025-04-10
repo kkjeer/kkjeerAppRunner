@@ -7,18 +7,20 @@ import json
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.KBParallelClient import KBParallel
 
-from biokbase.narrative.appeditor import generate_app_cell
-nms = biokbase.narrative.clients.get('narrative_method_store')
+from available_tasks import TASKS
+
+# from biokbase.narrative.appeditor import generate_app_cell
+# nms = biokbase.narrative.clients.get('narrative_method_store')
 #END_HEADER
 
 
-class kkjeerHello_World:
+class kkjeerAppRunner:
     '''
     Module Name:
-    kkjeerHello_World
+    kkjeerAppRunner
 
     Module Description:
-    A KBase module: kkjeerHello_World
+    A KBase module: kkjeerAppRunner
     '''
 
     ######## WARNING FOR GEVENT USERS ####### noqa
@@ -28,8 +30,8 @@ class kkjeerHello_World:
     # the latter method is running.
     ######################################### noqa
     VERSION = "0.0.1"
-    GIT_URL = "https://github.com/kkjeer/kkjeerHello_World"
-    GIT_COMMIT_HASH = "5eeb0c6a6c353b8b5f0afb128a30e475f1830fdf"
+    GIT_URL = "https://github.com/kkjeer/kkjeerAppRunner"
+    GIT_COMMIT_HASH = "b097bd9a33515ab7b03cab2a587dd30d15d9a0dd"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -46,7 +48,7 @@ class kkjeerHello_World:
         pass
 
 
-    def run_kkjeerHello_World(self, ctx, params):
+    def run_kkjeerAppRunner(self, ctx, params):
         """
         This example function accepts any number of parameters and returns results in a KBaseReport
         :param params: instance of mapping from String to unspecified object
@@ -55,52 +57,20 @@ class kkjeerHello_World:
         """
         # ctx is the context object
         # return variables are: output
-        #BEGIN run_kkjeerHello_World
-        print('Starting Hello_World run function')
+        #BEGIN run_kkjeerAppRunner
+        print('Starting AppRunner run function')
 
-        ws = biokbase.narrative.clients.get('workspace')
-        obj = ws.get_objects2({'objects' : [{'ref' : '30170/2/1'}]})
-        print(f'Got obj: {obj}')
+        # ws = biokbase.narrative.clients.get('workspace')
+        # obj = ws.get_objects2({'objects' : [{'ref' : '79/16/1'}]})
+        # print(f'Got obj: {obj}')
 
-        a_spec = nms.get_method_spec({'ids': ['kb_ea_utils/fastq_stats'], 'tag': 'release'})[0]
-        print(f'Got a_spec: {a_spec}')
+        # a_spec = nms.get_method_spec({'ids': ['kb_ea_utils/fastq_stats'], 'tag': 'release'})[0]
+        # print(f'Got a_spec: {a_spec}')
+
+        dropdownItems = list(set([obj["select_app"] for obj in params["param_group"]]))
 
         parallel_runner = KBParallel(self.callback_url)
-        tasks = [
-          {
-            'module_name': 'kb_Bowtie2',
-            'function_name': 'align_reads_to_assembly_app',
-            'version': 'dev',
-            'parameters': {
-              'alignment_type': 'end-to-end',
-              'assembly_or_genome_ref': '75203/10/1',
-              'condition_label': 'unknown',
-              'input_ref': '75203/9/2',
-              'maxins': 500,
-              'minins': 0,
-              'np': 1,
-              'orientation': None,
-              'output_alignment_suffix': '_alignment',
-              'output_obj_name_suffix': '_alignment_set',
-              'output_workspace': 'kkjeer:narrative_1740693446851',
-              'preset_options': None,
-              'quality_score': 'phred33',
-              'trim3': 0,
-              'trim5': 0
-            }
-          },
-          {
-            'module_name': 'fba_tools',
-            'function_name': 'run_flux_balance_analysis',
-            'version': 'release',
-            'parameters': {
-              'fbamodel_id': '75203/14/1',
-              'target_reaction': '4HBTE_c0',
-              'fba_output_id': 'kbparallel-fba-output',
-              'workspace': 'kkjeer:narrative_1740693446851',
-            }
-          }
-        ]
+        tasks = [TASKS[t] for t in dropdownItems]
         batch_run_params = {
           'tasks': tasks,
           'runner': 'parallel',
@@ -109,7 +79,6 @@ class kkjeerHello_World:
           'max_retries': 2
         }
         result = parallel_runner.run_batch(batch_run_params)
-        print(f'Created result: {str(result)}')
 
         report = KBaseReport(self.callback_url)
         report_info = report.create(
@@ -121,7 +90,7 @@ class kkjeerHello_World:
                   'description': 'ran parallel runner'
                 }
               ],
-              'text_message': f'<p>Param 1: {params["parameter_1"]}, Param 2: {params["parameter_2"]}</p><p>KBParallel result:</p><pre>{json.dumps(result, indent=2)}</pre>'
+              'text_message': f'<p>Dropdown items: {dropdownItems}</p><p>All params: {json.dumps(params, indent=2)}</p><p>KBParallel result:</p><pre>{json.dumps(result, indent=2)}</pre>'
             },
             'workspace_name': params['workspace_name']
           }
@@ -130,11 +99,11 @@ class kkjeerHello_World:
             'report_name': report_info['name'],
             'report_ref': report_info['ref'],
         }
-        #END run_kkjeerHello_World
+        #END run_kkjeerAppRunner
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method run_kkjeerHello_World return value ' +
+            raise ValueError('Method run_kkjeerAppRunner return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
