@@ -1,10 +1,10 @@
 #
 # define display information
 #
-name: Testing KBParallel
+name: App Runner
 
 tooltip: |
-  Tests running other apps from within this app using KBParallel
+  Tests running other apps from within this app
 
 screenshots: []
 

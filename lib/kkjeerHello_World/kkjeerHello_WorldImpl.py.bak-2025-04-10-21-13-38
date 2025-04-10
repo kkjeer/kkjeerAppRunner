@@ -29,9 +29,9 @@ class kkjeerHello_World:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "0.0.1"
+    VERSION = "0.0.2"
     GIT_URL = "https://github.com/kkjeer/kkjeerAppRunner"
-    GIT_COMMIT_HASH = "e1cd15818d313c4cacc0d14d95fa02cb8680fbd8"
+    GIT_COMMIT_HASH = "HEAD"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
