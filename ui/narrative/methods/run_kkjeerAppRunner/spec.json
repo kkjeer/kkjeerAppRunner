@@ -24,12 +24,20 @@
           }
         ]
       }
+    },
+    {
+      "id": "params_json",
+      "optional": true,
+      "field_type": "textarea",
+      "textarea_options": {
+        "n_rows": 8
+      }
     }
   ],
   "parameter-groups": [
     {
       "id": "param_group",
-      "parameters": ["select_app"],
+      "parameters": ["select_app", "params_json"],
       "optional": true,
       "allow_multiple": true,
       "with_border": true

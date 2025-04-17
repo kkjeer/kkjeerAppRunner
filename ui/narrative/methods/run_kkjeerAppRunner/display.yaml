@@ -30,6 +30,14 @@ parameters:
     long-hint: |
       This is used to select from among (currently hardcoded) apps to run.
 
+  params_json:
+    ui-name: |
+      Parameters (json)
+    short-hint: |
+      Paste in a JSON string
+    long-hint: |
+      JSON representation of the parameters that should be passed in to the selected app.
+
 parameter-groups:
   param_group:
     ui-name: |
