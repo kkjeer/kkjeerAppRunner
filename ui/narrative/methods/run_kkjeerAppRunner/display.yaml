@@ -24,9 +24,9 @@ suggestions:
 parameters:
   select_app:
     ui-name: |
-      App selector
+      App to run
     short-hint: |
-      Select the name of app(s) to run
+      Select the name of an app to run
     long-hint: |
       This is used to select from among (currently hardcoded) apps to run.
 

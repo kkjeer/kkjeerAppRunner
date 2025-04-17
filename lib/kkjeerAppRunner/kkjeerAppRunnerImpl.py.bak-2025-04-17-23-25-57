@@ -33,7 +33,7 @@ class kkjeerAppRunner:
     ######################################### noqa
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/kkjeer/kkjeerAppRunner"
-    GIT_COMMIT_HASH = "43cbcdd0f56354fc4dc8783b87db25f76efbb16d"
+    GIT_COMMIT_HASH = "6a55e7919f4257600c3dbaee1fd534efc597506a"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
