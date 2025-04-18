@@ -29,7 +29,7 @@ TASKS = {
       'fbamodel_id': '75203/14/1',
       'target_reaction': '4HBTE_c0',
       'fba_output_id': 'kbparallel-fba-output',
-      'workspace': 'kkjeer:narrative_1740693446851',
+      'workspace': 'kkjeer:narrative_1740693446851'
     }
   }
 }
