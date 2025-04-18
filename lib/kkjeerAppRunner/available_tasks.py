@@ -37,24 +37,25 @@ TASKS = {
     'function_name': 'run_CGViewAdvanced',
     'version': 'release',
     'parameters': {
-        "input_file": "75203/10/1",
-        "linear": 1,
-        "gc_content": 1,
-        "gc_skew": 1,
-        "at_content": 0,
-        "at_skew": 0,
-        "average": 1,
-        "scale": 1,
-        "orfs": 0,
-        "combined_orfs": 0,
-        "orf_size": 100,
-        "tick_density": 0.5,
-        "details": 1,
-        "legend": 1,
-        "condensed": 0,
-        "feature_labels": 0,
-        "orf_labels": 0,
-        "show_sequence_features": 1
+      "input_file": "75203/10/1",
+      "linear": 1,
+      "gc_content": 1,
+      "gc_skew": 1,
+      "at_content": 0,
+      "at_skew": 0,
+      "average": 1,
+      "scale": 1,
+      "orfs": 0,
+      "combined_orfs": 0,
+      "orf_size": 100,
+      "tick_density": 0.5,
+      "details": 1,
+      "legend": 1,
+      "condensed": 0,
+      "feature_labels": 0,
+      "orf_labels": 0,
+      "show_sequence_features": 1,
+      "workspace_name": 'kkjeer:narrative_1740693446851'
     }
   },
   'Weka': {
@@ -62,14 +63,14 @@ TASKS = {
     'function_name': 'decision_tree',
     'version': 'release',
     'parameters': {
-        "phenotype_ref": "75203/54/1",
-        "confidenceFactor": "0.25",
-        "minNumObj": "2",
-        "numFolds": "3",
-        "seed": "1",
-        "unpruned": 0,
-        "class_values": "0,1",
-        "class_labels": "NO_GROWTH,GROWTH"
+      "phenotype_ref": "75203/54/1",
+      "confidenceFactor": "0.25",
+      "minNumObj": "2",
+      "numFolds": "3",
+      "seed": "1",
+      "unpruned": 0,
+      "class_values": "0,1",
+      "class_labels": "NO_GROWTH,GROWTH"
     }
   }
 }
