@@ -10,7 +10,7 @@
   "parameters": [
     {
       "id": "select_app",
-      "optional": true,
+      "optional": false,
       "field_type": "dropdown",
       "dropdown_options": {
         "options": [
@@ -21,13 +21,21 @@
           {
             "value": "fba_tools",
             "display": "fba_tools.run_flux_balance_analysis"
+          },
+          {
+            "value": "CGViewAdvanced",
+            "display": "CGViewAdvanced.run_CGViewAdvanced"
+          },
+          {
+            "value": "Weka",
+            "display": "Weka.decision_tree"
           }
         ]
       }
     },
     {
       "id": "params_json",
-      "optional": true,
+      "optional": false,
       "field_type": "textarea",
       "textarea_options": {
         "n_rows": 8
