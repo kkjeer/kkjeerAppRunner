@@ -39,7 +39,8 @@ TASKS = {
     'version': 'release',
     'parameters': {
       "fba_id_list": ["75203/27/12", "75203/23/1"],
-      "fbacomparison_output_id": "my_comparison_id"
+      "fbacomparison_output_id": "my_comparison_id",
+      'workspace': 'kkjeer:narrative_1740693446851'
     }
   },
   # slow
