@@ -1,4 +1,5 @@
 TASKS = {
+  # should remove - this calls KBParallel
   'kb_Bowtie2': {
     'module_name': 'kb_Bowtie2',
     'function_name': 'align_reads_to_assembly_app',
@@ -21,7 +22,7 @@ TASKS = {
       'trim5': 0
     }
   },
-  'fba_tools': {
+  'flux_balance_analysis': {
     'module_name': 'fba_tools',
     'function_name': 'run_flux_balance_analysis',
     'version': 'release',
@@ -32,6 +33,16 @@ TASKS = {
       'workspace': 'kkjeer:narrative_1740693446851'
     }
   },
+  'compare_fba_solutions': {
+    'module_name': 'fba_tools',
+    'function_name': 'compare_fba_solutions',
+    'version': 'release',
+    'parameters': {
+      "fba_id_list": ["75203/27/12", "75203/23/1"],
+      "fbacomparison_output_id": "my_comparison_id"
+    }
+  },
+  # slow
   'CGViewAdvanced': {
     'module_name': 'CGViewAdvanced',
     'function_name': 'run_CGViewAdvanced',
@@ -58,6 +69,7 @@ TASKS = {
       "workspace_name": 'kkjeer:narrative_1740693446851'
     }
   },
+  # method not found error
   'Weka': {
     'module_name': 'Weka',
     'function_name': 'decision_tree',

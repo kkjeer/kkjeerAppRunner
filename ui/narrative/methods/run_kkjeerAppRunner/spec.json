@@ -19,16 +19,16 @@
             "display": "kb_Bowtie2.align_reads_to_assembly_app"
           },
           {
-            "value": "fba_tools",
+            "value": "flux_balance_analysis",
             "display": "fba_tools.run_flux_balance_analysis"
+          },
+          {
+            "value": "compare_fba_solutions",
+            "display": "fba_tools.compare_fba_solutions"
           },
           {
             "value": "CGViewAdvanced",
             "display": "CGViewAdvanced.run_CGViewAdvanced"
-          },
-          {
-            "value": "Weka",
-            "display": "Weka.decision_tree"
           }
         ]
       }
