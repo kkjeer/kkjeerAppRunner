@@ -18,12 +18,34 @@
       "optional": false,
       "allow_multiple": false,
       "field_type": "text"
+    },
+    {
+      "text_options": {
+        "valid_ws_types": ["KBaseBiochem.Media", "KBaseBiochem.MediaSet"]
+      },
+      "advanced": false,
+      "default_values": [""],
+      "id": "media_id",
+      "optional": true,
+      "allow_multiple": false,
+      "field_type": "text"
+    },
+    {
+      "default_values": ["0.5"],
+      "id": "activation_coefficient",
+      "advanced": true,
+      "field_type": "text",
+      "allow_multiple": false,
+      "optional": false,
+      "text_options": {
+        "validate_as": "float"
+      }
     }
   ],
   "parameter-groups": [
     {
       "id": "param_group",
-      "parameters": ["fbamodel_id"],
+      "parameters": ["fbamodel_id", "media_id", "activation_coefficient"],
       "optional": false,
       "allow_multiple": true,
       "with_border": true
