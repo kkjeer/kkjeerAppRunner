@@ -22,21 +22,13 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters:
-  select_app:
+  fbamodel_id:
     ui-name: |
-      App to run
+      FBA model
     short-hint: |
-      Select the name of an app to run
-    long-hint: |
-      This is used to select from among (currently hardcoded) apps to run.
-
-  params_json:
-    ui-name: |
-      Parameters (json)
-    short-hint: |
-      Paste in a JSON string
-    long-hint: |
-      JSON representation of the parameters that should be passed in to the selected app.
+      The metabolic model consisting of genome-wide set of stoichiometric reactions, compounds, and the weighted components of the biomass on which you wish to carry out Flux Balance Analysis (FBA). This model can be built using the “Build Metabolic Model” App.
+    placeholder: |
+      Model for FBA
 
 parameter-groups:
   param_group:
