@@ -57,19 +57,15 @@ class kkjeerAppRunner:
         #BEGIN run_kkjeerAppRunner
         print('Starting AppRunner run function')
         
-        # Configure the tasks to pass to KBParallel
+        # Configure the tasks to pass to KBParallel.
+        # The only app allowed (currently) is fba_tools.run_flux_balance_analysis.
+        # This is because KBase currently doesn't support dynamic UI, so this means
+        # the spec.json file can include only the parameters supported by fba_tools.run_flux_balance_analysis,
+        # and because fba_tools.run_flux_balance_analysis doesn't internally call KBParallel. Other apps that
+        # do can lead to exploding KBParallel calls and overwhelm the KBase system.
+        # Currently, spec.json only contains a subset of the parameters supported by run_flux_balance_analysis;
+        # more can be added by looking at the spec.json file from the run_flux_balance_analysis GitHub.
         tasks = [
-          # {
-          #   'module_name': 'fba_tools',
-          #   'function_name': 'run_flux_balance_analysis',
-          #   'version': 'release',
-          #   'parameters': {
-          #     'fbamodel_id': '75203/14/1',
-          #     'target_reaction': '4HBTE_c0',
-          #     'fba_output_id': 'kbparallel-fba-output',
-          #     'workspace': 'kkjeer:narrative_1740693446851'
-          #   }
-          # }
           {
             'module_name': 'fba_tools',
             'function_name': 'run_flux_balance_analysis',
@@ -85,7 +81,10 @@ class kkjeerAppRunner:
         ]
         print(f'Tasks: {tasks}')
         
-        # Configure how KBParallel should run
+        # Configure how KBParallel should run.
+        # Note that KBParallel is not a supported app. There is currently no supported way
+        # to run other apps from within a KBase app; KBParallel is only used as a way to
+        # demonstrate the proposed workflow of the test runner app.
         batch_run_params = {
           'tasks': tasks,
           'runner': 'parallel',
