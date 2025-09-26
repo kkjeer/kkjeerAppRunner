@@ -6,8 +6,6 @@ import json
 
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.KBParallelClient import KBParallel
-
-from available_tasks import TASKS
 #END_HEADER
 
 
