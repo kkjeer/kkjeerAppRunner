@@ -4,7 +4,7 @@
 name: App Runner
 
 tooltip: |
-  Tests running other apps from within this app
+  Run a flux balance analysis app with different parameter configurations
 
 screenshots: []
 
