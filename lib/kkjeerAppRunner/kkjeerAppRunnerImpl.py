@@ -37,6 +37,7 @@ class kkjeerAppRunner:
     def __init__(self, config):
         #BEGIN_CONSTRUCTOR
         self.callback_url = os.environ['SDK_CALLBACK_URL']
+        self.ws_url = config["workspace-url"]
         self.shared_folder = config['scratch']
         logging.basicConfig(format='%(created)s %(levelname)s: %(message)s',
                             level=logging.INFO)
@@ -98,7 +99,7 @@ class kkjeerAppRunner:
 
         # Create an output file
         try:
-          workspaceClient = Workspace(self.workspaceURL, token=ctx['token'])
+          ws = Workspace(self.ws_url, token=ctx['token'])
           testMatrixData = {
              'row_ids': ['row1', 'row2', 'row3'],
              'column_ids': ['col1', 'col2'],
@@ -112,8 +113,8 @@ class kkjeerAppRunner:
                 'an_int': 42,
                 'a_float': 6.02e-23,
                 'a_string': 'hello world'}
-          save_result = workspaceClient.save_objects(
-             {'workspace': 'MyWorkspace',
+          save_result = ws.save_objects(
+             {'workspace': params['workspace_name'],
               'objects': [{'name': 'simple3',
                            'type': u'SimpleObjects.SimpleObject-1.0',
                            'data': obj,
