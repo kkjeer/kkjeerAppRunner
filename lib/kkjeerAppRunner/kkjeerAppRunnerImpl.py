@@ -6,6 +6,7 @@ import json
 
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.KBParallelClient import KBParallel
+from installed_clients.WorkspaceClient import Workspace
 #END_HEADER
 
 
@@ -94,6 +95,30 @@ class kkjeerAppRunner:
         # Run the tasks
         parallel_runner = KBParallel(self.callback_url)
         result = parallel_runner.run_batch(batch_run_params)
+
+        # Create an output file
+        try:
+          workspaceClient = Workspace(self.workspaceURL, token=ctx['token'])
+          testMatrixData = {
+             'row_ids': ['row1', 'row2', 'row3'],
+             'column_ids': ['col1', 'col2'],
+             'row_labels': ['row label 1'],
+             'column_labels': ['column label 1'],
+             'row_groups_ids': ['1'],
+             'column_groups_ids': ['1'],
+             'data': [['A', 'B'], ['C', 'D'], ['E', 'F']]
+          }
+          result_file = workspaceClient.save_objects(
+             {'workspace': params['workspace_name'], 
+              'objects': {
+                 'name': 'app-runner-output-file', 
+                 'type': 'MAK.StringDataTable', 
+                 'data': testMatrixData
+                 }
+              })
+          print(f'result_file: {result_file}')
+        except:
+          print("failed to save file")
 
         # Create the output report
         report = KBaseReport(self.callback_url)
