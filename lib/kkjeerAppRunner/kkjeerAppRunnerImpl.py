@@ -108,15 +108,22 @@ class kkjeerAppRunner:
              'column_groups_ids': ['1'],
              'data': [['A', 'B'], ['C', 'D'], ['E', 'F']]
           }
-          result_file = workspaceClient.save_objects(
-             {'workspace': params['workspace_name'], 
-              'objects': {
-                 'name': 'app-runner-output-file', 
-                 'type': 'MAK.StringDataTable', 
-                 'data': testMatrixData
-                 }
+          obj = {'array_of_maps': [],
+                'an_int': 42,
+                'a_float': 6.02e-23,
+                'a_string': 'hello world'}
+          save_result = workspaceClient.save_objects(
+             {'workspace': 'MyWorkspace',
+              'objects': [{'name': 'simple3',
+                           'type': u'SimpleObjects.SimpleObject-1.0',
+                           'data': obj,
+                           'meta': {'Eccentrica': 'Gallumbits',
+                                    'Wowbagger': 'Prolonged'
+                                    }
+                           }
+                          ]
               })
-          print(f'result_file: {result_file}')
+          print(f'save_result: {save_result}')
         except:
           print("failed to save file")
 
