@@ -124,8 +124,8 @@ class kkjeerAppRunner:
                           ]
               })
           print(f'save_result: {save_result}')
-        except:
-          print("failed to save file")
+        except Exception as e:
+          print("failed to save file: {e}")
 
         # Create the output report
         report = KBaseReport(self.callback_url)
