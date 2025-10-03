@@ -97,6 +97,9 @@ class kkjeerAppRunner:
         parallel_runner = KBParallel(self.callback_url)
         result = parallel_runner.run_batch(batch_run_params)
 
+        # Set of objects created during this app run (will be linked to in the report at the end)
+        objects_created = []
+
         # Create an output file
         try:
           ws = Workspace(self.ws_url, token=ctx['token'])
@@ -109,10 +112,6 @@ class kkjeerAppRunner:
              'column_groups_ids': ['1'],
              'data': [['A', 'B'], ['C', 'D'], ['E', 'F']]
           }
-          obj = {'array_of_maps': [],
-                'an_int': 42,
-                'a_float': 6.02e-23,
-                'a_string': 'hello world'}
           save_result = ws.save_objects(
              {'workspace': params['workspace_name'],
               'objects': [{'name': 'app-runner-table',
@@ -122,16 +121,24 @@ class kkjeerAppRunner:
                           ]
               })
           print(f'save_result: {save_result}')
+          id = save_result[0][0]
+          version = save_result[0][4]
+          workspace_id = save_result[6]
+          name = save_result[0][1]
+          ref = f'{workspace_id}/{id}/{version}'
+          objects_created.append({'ref': ref, 'description': name})
         except Exception as e:
           print(f'failed to save file: {e}')
 
+        # Create the text for the output report
+        summary = "<table>"
+        summary += "<tr>"
+        for key in params['param_group'][0]:
+          summary += f'<th>{key}</th>'
+        summary += "</table>"
+
         # Create the output report
         report = KBaseReport(self.callback_url)
-        objects_created = []
-        # objects_created.append({
-                  # 'ref': '79/16/1',
-                  # 'description': 'ran parallel runner'
-                # })
         for i in range(0, len(result['results'])):
            r = result['results'][i]
            new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
@@ -140,7 +147,7 @@ class kkjeerAppRunner:
           {
             'report': {
               'objects_created': objects_created,
-              'text_message': f'<p>Params: {params["param_group"]}</p><p>Tasks: {tasks}</p><p>All params: {json.dumps(params, indent=2)}</p><p>KBParallel result:</p><pre>{json.dumps(result, indent=2)}</pre>'
+              'text_message': f'{summary}<p>Params: {params["param_group"]}</p><p>Tasks: {tasks}</p><p>All params: {json.dumps(params, indent=2)}</p><p>KBParallel result:</p><pre>{json.dumps(result, indent=2)}</pre>'
             },
             'workspace_name': params['workspace_name']
           }
