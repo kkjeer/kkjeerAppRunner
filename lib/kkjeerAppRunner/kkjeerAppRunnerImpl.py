@@ -119,7 +119,7 @@ class kkjeerAppRunner:
         param_names = list(tasks[0]['parameters'].keys())
         table_headers = param_names + ['objective value', 'result ref']
         for h in table_headers:
-          summary += f'<th>{h}</th>'
+          summary += f'<th style="padding: 5px">{h}</th>'
         summary += "</tr>"
 
         tableData['column_ids'] = table_headers
@@ -135,25 +135,20 @@ class kkjeerAppRunner:
           objective = r['objective']
           new_fba_ref = r['new_fba_ref']
           summary += "<tr>"
+          data = []
           for key in p:
-            summary += f'<td>{p[key]}</td>'
+            summary += f'<td style="padding: 5px">{p[key]}</td>'
+            data.append[p[key]]
           summary += f'<td>{objective}</td>'
           summary += f'<td>{new_fba_ref}</td>'
           summary += "</tr>"
+          tableData['data'].append(data)
+          objects_created.append({'ref': new_fba_ref, 'description': f'results of running fba configuration {i}'})
         summary += "</table>"
 
         # Create an output file
         try:
           ws = Workspace(self.ws_url, token=ctx['token'])
-          testTableData = {
-             'row_ids': ['row1', 'row2', 'row3'],
-             'column_ids': ['col1', 'col2'],
-             'row_labels': ['row label 1'],
-             'column_labels': ['column label 1'],
-             'row_groups_ids': ['1'],
-             'column_groups_ids': ['1'],
-             'data': [['A', 'B'], ['C', 'D'], ['E', 'F']]
-          }
           save_result = ws.save_objects(
              {'workspace': params['workspace_name'],
               'objects': [{'name': 'app-runner-table',
@@ -172,35 +167,16 @@ class kkjeerAppRunner:
         except Exception as e:
           print(f'failed to save file: {e}')
 
-        # Create the text for the output report
-        # summary = "<table>"
-        # summary += "<tr>"
-        # for key in params['param_group'][0]:
-        #   summary += f'<th>{key}</th>'
-        # summary += "<th>result ref</th>"
-        # summary += "</tr>"
-        # for i in range(0, len(result['results'])):
-        #   summary += "<tr>"
-        #   p = params['param_group'][i]
-        #   for key in p:
-        #     summary += f'<td>{p[key]}</td>'
-        #   r = result['results'][i]
-        #   new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
-        #   summary += f'<td>{new_fba_ref}</td>'
-        #   summary += "</tr>"
-        # summary += "</table>"
+        # Extra message to help debug
+        debug_message = f'<p>Params: {params["param_group"]}</p><p>Tasks: {tasks}</p><p>All params: {json.dumps(params, indent=2)}</p><p>KBParallel result:</p><pre>{json.dumps(result, indent=2)}</pre>'
 
         # Create the output report
-        report = KBaseReport(self.callback_url)
-        for i in range(0, len(result['results'])):
-          r = result['results'][i]
-          new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
-          objects_created.append({'ref': new_fba_ref, 'description': f'results of running fba configuration {i}'})
+        report = KBaseReport(self.callback_url)          
         report_info = report.create(
           {
             'report': {
               'objects_created': objects_created,
-              'text_message': f'{summary}<p>Params: {params["param_group"]}</p><p>Tasks: {tasks}</p><p>All params: {json.dumps(params, indent=2)}</p><p>KBParallel result:</p><pre>{json.dumps(result, indent=2)}</pre>'
+              'text_message': f'{summary}<br/>{debug_message}'
             },
             'workspace_name': params['workspace_name']
           }
