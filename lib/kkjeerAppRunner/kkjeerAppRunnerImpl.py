@@ -134,13 +134,15 @@ class kkjeerAppRunner:
           r = result['results'][i]['final_job_state']['result'][0]
           objective = r['objective']
           new_fba_ref = r['new_fba_ref']
-          summary += "<tr>"
+          summary += "<tr style=border-top: 1px solid #505050>"
           data = []
+          bg = "#f4f4f4" if i % 2 == 1 else "transparent"
+          style = f'style=padding: 5px; background-color: {bg};'
           for key in p:
-            summary += f'<td style="padding: 5px; background-color: {"#ededed" if i % 2 == 1 else "transparent"}">{p[key]}</td>'
+            summary += f'<td {style}">{p[key]}</td>'
             data.append(str(p[key]))
-          summary += f'<td>{objective}</td>'
-          summary += f'<td>{new_fba_ref}</td>'
+          summary += f'<td {style}>{objective}</td>'
+          summary += f'<td {style}>{new_fba_ref}</td>'
           summary += "</tr>"
           tableData['data'].append(data)
           objects_created.append({'ref': new_fba_ref, 'description': f'results of running fba configuration {i}'})
@@ -167,7 +169,7 @@ class kkjeerAppRunner:
         except Exception as e:
           print(f'failed to save file: {e}')
 
-        # Extra message to help debug
+        # Extra message to help debug (optionally append to the text_message in the report below)
         debug_message = f'<p>Params: {params["param_group"]}</p><p>Tasks: {tasks}</p><p>All params: {json.dumps(params, indent=2)}</p><p>KBParallel result:</p><pre>{json.dumps(result, indent=2)}</pre>'
 
         # Create the output report
@@ -176,7 +178,7 @@ class kkjeerAppRunner:
           {
             'report': {
               'objects_created': objects_created,
-              'text_message': f'{summary}<br/>{debug_message}'
+              'text_message': f'{summary}'
             },
             'workspace_name': params['workspace_name']
           }
