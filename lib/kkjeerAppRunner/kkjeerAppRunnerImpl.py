@@ -134,7 +134,7 @@ class kkjeerAppRunner:
           r = result['results'][i]['final_job_state']['result'][0]
           objective = r['objective']
           new_fba_ref = r['new_fba_ref']
-          summary += "<tr style=border-top: 1px solid #505050>"
+          summary += "<tr style=\"border-top: 1px solid #505050;\">"
           data = []
           bg = "#f4f4f4" if i % 2 == 1 else "transparent"
           style = f'style="padding: 5px; background-color: {bg};"'
