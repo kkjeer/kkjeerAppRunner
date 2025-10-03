@@ -138,7 +138,7 @@ class kkjeerAppRunner:
           data = []
           for key in p:
             summary += f'<td style="padding: 5px">{p[key]}</td>'
-            data.append[p[key]]
+            data.append(p[key])
           summary += f'<td>{objective}</td>'
           summary += f'<td>{new_fba_ref}</td>'
           summary += "</tr>"
