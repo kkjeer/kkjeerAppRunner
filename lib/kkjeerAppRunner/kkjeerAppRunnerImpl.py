@@ -100,7 +100,7 @@ class kkjeerAppRunner:
         # Create an output file
         try:
           ws = Workspace(self.ws_url, token=ctx['token'])
-          testMatrixData = {
+          testTableData = {
              'row_ids': ['row1', 'row2', 'row3'],
              'column_ids': ['col1', 'col2'],
              'row_labels': ['row label 1'],
@@ -115,12 +115,9 @@ class kkjeerAppRunner:
                 'a_string': 'hello world'}
           save_result = ws.save_objects(
              {'workspace': params['workspace_name'],
-              'objects': [{'name': 'simple3',
-                           'type': u'SimpleObjects.SimpleObject-1.0',
-                           'data': obj,
-                           'meta': {'Eccentrica': 'Gallumbits',
-                                    'Wowbagger': 'Prolonged'
-                                    }
+              'objects': [{'name': 'app-runner-table',
+                           'type': 'MAK.StringDataTable',
+                           'data': testTableData,
                            }
                           ]
               })
@@ -130,15 +127,19 @@ class kkjeerAppRunner:
 
         # Create the output report
         report = KBaseReport(self.callback_url)
+        objects_created = []
+        # objects_created.append({
+                  # 'ref': '79/16/1',
+                  # 'description': 'ran parallel runner'
+                # })
+        for i in range(0, len(result['results'])):
+           r = result['results'][i]
+           new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
+           objects_created.append({'ref': new_fba_ref, 'description': f'results of running fba configuration {i}'})
         report_info = report.create(
           {
             'report': {
-              'objects_created':[
-                {
-                  'ref': '79/16/1',
-                  'description': 'ran parallel runner'
-                }
-              ],
+              'objects_created': objects_created,
               'text_message': f'<p>Params: {params["param_group"]}</p><p>Tasks: {tasks}</p><p>All params: {json.dumps(params, indent=2)}</p><p>KBParallel result:</p><pre>{json.dumps(result, indent=2)}</pre>'
             },
             'workspace_name': params['workspace_name']
