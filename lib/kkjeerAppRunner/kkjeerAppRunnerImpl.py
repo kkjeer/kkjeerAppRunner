@@ -123,7 +123,7 @@ class kkjeerAppRunner:
           print(f'save_result: {save_result}')
           id = save_result[0][0]
           version = save_result[0][4]
-          workspace_id = save_result[6]
+          workspace_id = save_result[0][6]
           name = save_result[0][1]
           ref = f'{workspace_id}/{id}/{version}'
           objects_created.append({'ref': ref, 'description': name})
@@ -135,6 +135,17 @@ class kkjeerAppRunner:
         summary += "<tr>"
         for key in params['param_group'][0]:
           summary += f'<th>{key}</th>'
+        summary += "<th>result ref</th>"
+        summary += "</tr>"
+        for i in range(0, len(result['results'])):
+          summary += "<tr>"
+          p = params['param_group'][i]
+          for key in p:
+            summary += f'<td>{p[key]}</td>'
+          r = result['results'][i]
+          new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
+          summary += f'<td>{new_fba_ref}</td>'
+          summary += "</tr>"
         summary += "</table>"
 
         # Create the output report
