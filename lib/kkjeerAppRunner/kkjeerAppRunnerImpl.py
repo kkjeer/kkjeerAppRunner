@@ -137,7 +137,7 @@ class kkjeerAppRunner:
           summary += "<tr style=border-top: 1px solid #505050>"
           data = []
           bg = "#f4f4f4" if i % 2 == 1 else "transparent"
-          style = f'style=padding: 5px; background-color: {bg};'
+          style = f'style="padding: 5px; background-color: {bg};"'
           for key in p:
             summary += f'<td {style}">{p[key]}</td>'
             data.append(str(p[key]))
@@ -194,7 +194,7 @@ class kkjeerAppRunner:
             raise ValueError('Method run_kkjeerAppRunner return value ' +
                              'output is not type dict as required.')
         # return the results
-        return [output]
+        return []
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",
