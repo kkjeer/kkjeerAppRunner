@@ -100,6 +100,48 @@ class kkjeerAppRunner:
         # Set of objects created during this app run (will be linked to in the report at the end)
         objects_created = []
 
+        # Use the task parameters and the kbparallel results to construct
+        # the data that will be used in the output file, and
+        # the HTML summary text that will be used in the report
+        tableData = {
+          'row_ids': [],
+          'column_ids': [],
+          'row_labels': [],
+          'column_labels': [],
+          'row_groups_ids': [],
+          'column_groups_ids': [],
+          'data': []
+        }
+
+        # Top row of summary table: parameters used in each fba run and the results of the fun
+        summary = "<table>"
+        summary += "<tr>"
+        param_names = tasks[0]['parameters'].keys()
+        table_headers = param_names + ['objective value', 'result ref']
+        for h in table_headers:
+          summary += f'<th>{h}</th>'
+        summary += "</tr>"
+
+        tableData['column_ids'] = table_headers
+        tableData['column_labels'] = table_headers
+
+        # Fill in the rows of the table data and summary table text
+        for i in range(0, len(tasks)):
+          tableData['row_ids'].append(f'row{i}')
+          tableData['row_labels'].append(f'row {i}')
+          t = tasks[i]
+          p = t['parameters']
+          r = result['results'][i]['final_job_state']['result'][0]
+          objective = r['objective']
+          new_fba_ref = r['new_fba_ref']
+          summary += "<tr>"
+          for key in p:
+            summary += f'<td>{p[key]}</td>'
+          summary += f'<td>{objective}</td>'
+          summary += f'<td>{new_fba_ref}</td>'
+          summary += "</tr>"
+        summary += "</table>"
+
         # Create an output file
         try:
           ws = Workspace(self.ws_url, token=ctx['token'])
@@ -116,7 +158,7 @@ class kkjeerAppRunner:
              {'workspace': params['workspace_name'],
               'objects': [{'name': 'app-runner-table',
                            'type': 'MAK.StringDataTable',
-                           'data': testTableData,
+                           'data': tableData,
                            }
                           ]
               })
@@ -131,29 +173,29 @@ class kkjeerAppRunner:
           print(f'failed to save file: {e}')
 
         # Create the text for the output report
-        summary = "<table>"
-        summary += "<tr>"
-        for key in params['param_group'][0]:
-          summary += f'<th>{key}</th>'
-        summary += "<th>result ref</th>"
-        summary += "</tr>"
-        for i in range(0, len(result['results'])):
-          summary += "<tr>"
-          p = params['param_group'][i]
-          for key in p:
-            summary += f'<td>{p[key]}</td>'
-          r = result['results'][i]
-          new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
-          summary += f'<td>{new_fba_ref}</td>'
-          summary += "</tr>"
-        summary += "</table>"
+        # summary = "<table>"
+        # summary += "<tr>"
+        # for key in params['param_group'][0]:
+        #   summary += f'<th>{key}</th>'
+        # summary += "<th>result ref</th>"
+        # summary += "</tr>"
+        # for i in range(0, len(result['results'])):
+        #   summary += "<tr>"
+        #   p = params['param_group'][i]
+        #   for key in p:
+        #     summary += f'<td>{p[key]}</td>'
+        #   r = result['results'][i]
+        #   new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
+        #   summary += f'<td>{new_fba_ref}</td>'
+        #   summary += "</tr>"
+        # summary += "</table>"
 
         # Create the output report
         report = KBaseReport(self.callback_url)
         for i in range(0, len(result['results'])):
-           r = result['results'][i]
-           new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
-           objects_created.append({'ref': new_fba_ref, 'description': f'results of running fba configuration {i}'})
+          r = result['results'][i]
+          new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
+          objects_created.append({'ref': new_fba_ref, 'description': f'results of running fba configuration {i}'})
         report_info = report.create(
           {
             'report': {
