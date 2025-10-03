@@ -116,7 +116,7 @@ class kkjeerAppRunner:
         # Top row of summary table: parameters used in each fba run and the results of the fun
         summary = "<table>"
         summary += "<tr>"
-        param_names = tasks[0]['parameters'].keys()
+        param_names = list(tasks[0]['parameters'].keys())
         table_headers = param_names + ['objective value', 'result ref']
         for h in table_headers:
           summary += f'<th>{h}</th>'
