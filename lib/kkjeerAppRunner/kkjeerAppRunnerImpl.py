@@ -56,6 +56,16 @@ class kkjeerAppRunner:
         # return variables are: output
         #BEGIN run_kkjeerAppRunner
         print('Starting AppRunner run function')
+
+        # Experiment with reading the string table that was created at the end of running this app
+        # (this might be useful for the later app that reads the table)
+        try:
+          ws = Workspace(self.ws_url, token=ctx['token'])
+          ref = '76795/89/8'
+          obj = ws.get_objects2({'objects' : [{'ref' : ref}]})
+          print(f'read string table: {obj}')
+        except Exception as e:
+          print(f'could not read string table: {e}')
         
         # Configure the tasks to pass to KBParallel.
         # The only app allowed (currently) is fba_tools.run_flux_balance_analysis.
@@ -117,6 +127,7 @@ class kkjeerAppRunner:
         summary = "<table>"
         summary += "<tr>"
         param_names = list(tasks[0]['parameters'].keys())
+        param_names = [item for item in param_names if item != "workspace"]
         table_headers = param_names + ['objective value', 'result ref']
         for h in table_headers:
           summary += f'<th style="padding: 5px">{h}</th>'
@@ -138,9 +149,9 @@ class kkjeerAppRunner:
           data = []
           bg = "#f4f4f4" if i % 2 == 1 else "transparent"
           style = f'style="padding: 5px; background-color: {bg};"'
-          for key in p:
-            summary += f'<td {style}">{p[key]}</td>'
-            data.append(str(p[key]))
+          for name in param_names:
+            summary += f'<td {style}">{p[name]}</td>'
+            data.append(str(p[name]))
           summary += f'<td {style}>{objective}</td>'
           summary += f'<td {style}>{new_fba_ref}</td>'
           summary += "</tr>"
@@ -163,9 +174,8 @@ class kkjeerAppRunner:
           id = save_result[0][0]
           version = save_result[0][4]
           workspace_id = save_result[0][6]
-          name = save_result[0][1]
           ref = f'{workspace_id}/{id}/{version}'
-          objects_created.append({'ref': ref, 'description': name})
+          objects_created.append({'ref': ref, 'description': 'summary of results'})
         except Exception as e:
           print(f'failed to save file: {e}')
 
@@ -187,6 +197,7 @@ class kkjeerAppRunner:
             'report_name': report_info['name'],
             'report_ref': report_info['ref'],
         }
+        output = {}
         #END run_kkjeerAppRunner
 
         # At some point might do deeper type checking...
