@@ -188,7 +188,7 @@ class kkjeerAppRunner:
           {
             'report': {
               'objects_created': objects_created,
-              'text_message': f'{summary}'
+              'text_message': f'{summary}<br />{debug_message}'
             },
             'workspace_name': params['workspace_name']
           }
@@ -197,7 +197,6 @@ class kkjeerAppRunner:
             'report_name': report_info['name'],
             'report_ref': report_info['ref'],
         }
-        output = {}
         #END run_kkjeerAppRunner
 
         # At some point might do deeper type checking...
