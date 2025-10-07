@@ -38,12 +38,6 @@ parameters:
     placeholder: |
       Growth condition for FBA
 
-  target_reaction:
-    ui-name: |
-      Reaction to maximize
-    short-hint: |
-      ID of reaction flux to maximize in FBA. Only one reaction can be selected. First you must deselect the default reaction 'bio1' and then select the desired target reaction to maximize. You may use the search box to search through the available reactions in your model.
-
   activation_coefficient:
     ui-name: |
       Activation coefficient

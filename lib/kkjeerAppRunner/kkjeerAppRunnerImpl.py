@@ -82,7 +82,8 @@ class kkjeerAppRunner:
             'version': 'release',
             'parameters': {
               'fba_output_id': f'apprunner-fba-output-{i}',
-              'target_reaction': '4HBTE_c0',
+              # 'target_reaction': '4HBTE_c0',
+              'target_reaction': 'bio1',
               **params['param_group'][i],
               'workspace': params['workspace_name']
             }
