@@ -60,14 +60,15 @@ class kkjeerAppRunner:
         #BEGIN run_kkjeerAppRunner
         print('Starting AppRunner run function')
 
+        # Create utilities
         runner = AppRunnerUtil(self.config)
         fileUtil = FileUtil(self.config)
         outputUtil = OutputUtil(self.config)
 
         # Experiment with reading the string table created during one of the previous app runs
-        fileUtil.readStringTable(ctx)
+        previous_string_table = fileUtil.readStringTable(ctx)
         
-        # Run the FBA app using KBParallel
+        # Run the FBA apps using KBParallel
         tasks = runner.createTasks(params)
         kbparallel_result = runner.runKBParallel(tasks)
 
@@ -76,71 +77,30 @@ class kkjeerAppRunner:
         for r in kbparallel_result['results']:
           new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
           fba_refs.append(new_fba_ref)
-        fileUtil.readFBAOutputs(ctx, fba_refs)
+        fba_outputs = fileUtil.readFBAOutputs(ctx, fba_refs)
 
         # Set of objects created during this app run (will be linked to in the report at the end)
+        # To start, this includes a link for each FBA output created during the KBParallel run
         objects_created = [{'ref': new_fba_ref, 'description': f'results of running fba configuration {i}'} for i in range(0, len(fba_refs))]
-
-        # Use the task parameters and the KBParallel results to construct
-        # the data that will be used in the output file, and
-        # the HTML summary text that will be used in the report
-        tableData = {
-          'row_ids': [],
-          'column_ids': [],
-          'row_labels': [],
-          'column_labels': [],
-          'row_groups_ids': [],
-          'column_groups_ids': [],
-          'data': []
-        }
-
-        # Top row of summary table: parameters used in each fba run and the results of the run
-        summary = "<table>"
-        summary += "<tr>"
-        param_names = list(tasks[0]['parameters'].keys())
-        param_names = [item for item in param_names if item != "workspace"]
-        table_headers = param_names + ['objective value', 'result ref']
-        for h in table_headers:
-          summary += f'<th style="padding: 5px">{h}</th>'
-        summary += "</tr>"
-
-        tableData['column_ids'] = table_headers
-        tableData['column_labels'] = table_headers
-
-        # Fill in the rows of the table data and summary table text
-        for i in range(0, len(tasks)):
-          tableData['row_ids'].append(f'row{i}')
-          tableData['row_labels'].append(f'row {i}')
-          t = tasks[i]
-          p = t['parameters']
-          r = kbparallel_result['results'][i]['final_job_state']['result'][0]
-          objective = r['objective']
-          new_fba_ref = r['new_fba_ref']
-          summary += "<tr style=\"border-top: 1px solid #505050;\">"
-          data = []
-          bg = "#f4f4f4" if i % 2 == 1 else "transparent"
-          style = f'style="padding: 5px; background-color: {bg};"'
-          for name in param_names:
-            summary += f'<td {style}">{p[name]}</td>'
-            data.append(str(p[name]))
-          summary += f'<td {style}>{objective}</td>'
-          summary += f'<td {style}>{new_fba_ref}</td>'
-          summary += "</tr>"
-          tableData['data'].append(data)
-          # objects_created.append({'ref': new_fba_ref, 'description': f'results of running fba configuration {i}'})
-        summary += "</table>"
-
-        tableData = outputUtil.createTableData(tasks)
-        summary = outputUtil.createSummary(tasks, kbparallel_result)
 
         # Save the results into a string data table
         # (if successful, this will be another object linked to in the final report)
+        tableData = outputUtil.createTableData(tasks)
         string_data_table = fileUtil.writeStringTable(ctx, params, tableData)
         if string_data_table is not None:
           objects_created.append(string_data_table)
 
+        # HTML table displayed to the user in the report at the end
+        summary = outputUtil.createSummary(tasks, kbparallel_result)
+
         # Extra message to help debug (optionally append to the text_message in the report below)
-        debug_message = f'<p>Params: {params["param_group"]}</p><p>Tasks: {tasks}</p><p>All params: {json.dumps(params, indent=2)}</p><p>KBParallel result:</p><pre>{json.dumps(kbparallel_result, indent=2)}</pre>'
+        debug_message = ''
+        # debug_message = f'<p>All params: {json.dumps(params, indent=2)}</p>'
+        debug_message += f'<p>KBParallel result:</p><pre>{json.dumps(kbparallel_result, indent=2)}</pre>'
+        if fba_outputs is not None:
+          debug_message += f'<p>FBA outputs:</p><pre>{json.dumps(fba_outputs, indent=2)}</pre>'
+        if previous_string_table is not None:
+          debug_message += f'<p>String table (created during previous app run):</p><pre>{json.dumps(previous_string_table, indent=2)}</pre>'
 
         # Create the output report
         report = KBaseReport(self.callback_url)          
