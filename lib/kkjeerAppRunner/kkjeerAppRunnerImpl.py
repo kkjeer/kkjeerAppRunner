@@ -8,6 +8,7 @@ from installed_clients.KBaseReportClient import KBaseReport
 
 from Utils.AppRunnerUtil import AppRunnerUtil
 from Utils.FileUtil import FileUtil
+from Utils.OutputUtil import OutputUtil
 #END_HEADER
 
 
@@ -61,6 +62,7 @@ class kkjeerAppRunner:
 
         runner = AppRunnerUtil(self.config)
         fileUtil = FileUtil(self.config)
+        outputUtil = OutputUtil(self.config)
 
         # Experiment with reading the string table created during one of the previous app runs
         fileUtil.readStringTable(ctx)
@@ -77,7 +79,7 @@ class kkjeerAppRunner:
         fileUtil.readFBAOutputs(ctx, fba_refs)
 
         # Set of objects created during this app run (will be linked to in the report at the end)
-        objects_created = []
+        objects_created = [{'ref': new_fba_ref, 'description': f'results of running fba configuration {i}'} for i in range(0, len(fba_refs))]
 
         # Use the task parameters and the KBParallel results to construct
         # the data that will be used in the output file, and
@@ -125,8 +127,11 @@ class kkjeerAppRunner:
           summary += f'<td {style}>{new_fba_ref}</td>'
           summary += "</tr>"
           tableData['data'].append(data)
-          objects_created.append({'ref': new_fba_ref, 'description': f'results of running fba configuration {i}'})
+          # objects_created.append({'ref': new_fba_ref, 'description': f'results of running fba configuration {i}'})
         summary += "</table>"
+
+        tableData = outputUtil.createTableData(tasks)
+        summary = outputUtil.createSummary(tasks, kbparallel_result)
 
         # Save the results into a string data table
         # (if successful, this will be another object linked to in the final report)

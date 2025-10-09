@@ -1,5 +1,6 @@
 import logging
 import os
+import json
 
 from installed_clients.WorkspaceClient import Workspace
 
@@ -18,7 +19,7 @@ class FileUtil:
       ws = Workspace(self.ws_url, token=ctx['token'])
       to_read = [{'ref': ref} for ref in refs]
       obj = ws.get_objects2({'objects': to_read})
-      print(f'read fba outputs: {obj}')
+      print(f'read fba outputs: {json.dumps(obj, indent=2)}')
       return obj
     except Exception as e:
       print(f'count not read fba outputs: {e}')
