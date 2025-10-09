@@ -5,10 +5,9 @@ import os
 import json
 
 from installed_clients.KBaseReportClient import KBaseReport
-from installed_clients.KBParallelClient import KBParallel
-from installed_clients.WorkspaceClient import Workspace
 
 from Utils.AppRunnerUtil import AppRunnerUtil
+from Utils.FileUtil import FileUtil
 #END_HEADER
 
 
@@ -61,13 +60,21 @@ class kkjeerAppRunner:
         print('Starting AppRunner run function')
 
         runner = AppRunnerUtil(self.config)
+        fileUtil = FileUtil(self.config)
 
         # Experiment with reading the string table created during one of the previous app runs
-        runner.readStringTable(ctx)
+        fileUtil.readStringTable(ctx)
         
         # Run the FBA app using KBParallel
         tasks = runner.createTasks(params)
         kbparallel_result = runner.runKBParallel(tasks)
+
+        # Experiment with reading the results of the fba runs
+        fba_refs = []
+        for r in kbparallel_result['results']:
+          new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
+          fba_refs.append(new_fba_ref)
+        fileUtil.readFBAOutputs(ctx, fba_refs)
 
         # Set of objects created during this app run (will be linked to in the report at the end)
         objects_created = []
@@ -123,7 +130,7 @@ class kkjeerAppRunner:
 
         # Save the results into a string data table
         # (if successful, this will be another object linked to in the final report)
-        string_data_table = runner.writeStringTable(ctx, params, tableData)
+        string_data_table = fileUtil.writeStringTable(ctx, params, tableData)
         if string_data_table is not None:
           objects_created.append(string_data_table)
 

@@ -2,8 +2,9 @@ import logging
 import os
 
 from installed_clients.KBParallelClient import KBParallel
-from installed_clients.WorkspaceClient import Workspace
 
+# This class is responsible for running multiple instance of
+# the flux_balance_analysis app, given a set of parameter configurations.
 class AppRunnerUtil:
   def __init__(self, config):
     self.config = config
@@ -57,40 +58,3 @@ class AppRunnerUtil:
     parallel_runner = KBParallel(self.callback_url)
     result = parallel_runner.run_batch(batch_run_params)
     return result
-  
-  # This method demonstrates reading the string table that was created at the end of running this app
-  # (this might be useful for the later app that reads the table)
-  def readStringTable(self, ctx):
-    try:
-      ws = Workspace(self.ws_url, token=ctx['token'])
-      ref = '76795/89/8'
-      obj = ws.get_objects2({'objects' : [{'ref' : ref}]})
-      print(f'read string table: {obj}')
-    except Exception as e:
-      print(f'could not read string table: {e}')
-
-  # This method writes the results of the fba runs into a string data table
-  # so that other apps can read this data and ask the user for input based on the results.
-  def writeStringTable(self, ctx, params, tableData):
-    try:
-      ws = Workspace(self.ws_url, token=ctx['token'])
-      save_result = ws.save_objects(
-         {
-           'workspace': params['workspace_name'],
-           'objects': [
-              {
-                'name': 'app-runner-table',
-                'type': 'MAK.StringDataTable',
-                'data': tableData,
-              }
-            ]
-          })
-      print(f'string data table: {save_result}')
-      id = save_result[0][0]
-      version = save_result[0][4]
-      workspace_id = save_result[0][6]
-      ref = f'{workspace_id}/{id}/{version}'
-      return {'ref': ref, 'description': 'summary of results'}
-    except Exception as e:
-      print(f'failed to save string data table: {e}')
-      return None
