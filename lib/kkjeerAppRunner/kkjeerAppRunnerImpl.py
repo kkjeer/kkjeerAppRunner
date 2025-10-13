@@ -81,7 +81,7 @@ class kkjeerAppRunner:
 
         # Set of objects created during this app run (will be linked to in the report at the end)
         # To start, this includes a link for each FBA output created during the KBParallel run
-        objects_created = [{'ref': new_fba_ref, 'description': f'results of running fba configuration {i}'} for i in range(0, len(fba_refs))]
+        objects_created = [{'ref': fba_refs[i], 'description': f'results of running fba configuration {i}'} for i in range(0, len(fba_refs))]
 
         # Save the results into a string data table
         # (if successful, this will be another object linked to in the final report)
