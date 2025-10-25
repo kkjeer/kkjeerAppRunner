@@ -37,7 +37,7 @@ class AppRunnerUtil:
       }
       for i in range(0, len(params["param_group"]))
     ]
-    print(f'Tasks: {tasks}')
+    logging.info(f'Tasks: {tasks}')
     return tasks
   
   # This method runs KBParallel on the given set of tasks.

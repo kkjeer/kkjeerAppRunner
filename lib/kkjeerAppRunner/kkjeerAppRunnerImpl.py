@@ -58,7 +58,7 @@ class kkjeerAppRunner:
         # ctx is the context object
         # return variables are: output
         #BEGIN run_kkjeerAppRunner
-        print('Starting AppRunner run function')
+        logging.info('Starting AppRunner run function')
 
         # Create utilities
         runner = AppRunnerUtil(self.config)

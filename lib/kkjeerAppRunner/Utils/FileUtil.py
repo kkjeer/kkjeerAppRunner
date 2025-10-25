@@ -19,10 +19,10 @@ class FileUtil:
       ws = Workspace(self.ws_url, token=ctx['token'])
       to_read = [{'ref': ref} for ref in refs]
       obj = ws.get_objects2({'objects': to_read})
-      print(f'read fba outputs: {json.dumps(obj, indent=2)}')
+      logging.info(f'read fba outputs: {json.dumps(obj, indent=2)}')
       return obj
     except Exception as e:
-      print(f'count not read fba outputs: {e}')
+      logging.error(f'could not read fba outputs: {e}')
       return None
     
   # This method demonstrates reading the string table that was created at the end of running this app
@@ -32,10 +32,10 @@ class FileUtil:
       ws = Workspace(self.ws_url, token=ctx['token'])
       ref = '76795/89/8'
       obj = ws.get_objects2({'objects' : [{'ref' : ref}]})
-      print(f'read string table: {obj}')
+      logging.info(f'read string table: {obj}')
       return obj
     except Exception as e:
-      print(f'could not read string table: {e}')
+      logging.error(f'could not read string table: {e}')
       return None
 
   # This method writes the results of the fba runs into a string data table
@@ -54,12 +54,12 @@ class FileUtil:
               }
             ]
           })
-      print(f'string data table: {save_result}')
+      logging.info(f'string data table: {save_result}')
       id = save_result[0][0]
       version = save_result[0][4]
       workspace_id = save_result[0][6]
       ref = f'{workspace_id}/{id}/{version}'
       return {'ref': ref, 'description': 'summary of results'}
     except Exception as e:
-      print(f'failed to save string data table: {e}')
+      logging.error(f'failed to save string data table: {e}')
       return None
