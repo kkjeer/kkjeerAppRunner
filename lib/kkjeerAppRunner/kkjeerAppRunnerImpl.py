@@ -80,7 +80,7 @@ class kkjeerAppRunner:
 
         # Save the results into a string data table
         # (if successful, this will be another object linked to in the final report)
-        tableData = outputUtil.createTableData(tasks)
+        tableData = outputUtil.createTableData(tasks, kbparallel_result)
         string_data_table = fileUtil.writeStringTable(ctx, params, tableData)
         if string_data_table is not None:
           objects_created.append(string_data_table)
