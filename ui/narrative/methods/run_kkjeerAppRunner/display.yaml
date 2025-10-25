@@ -45,7 +45,7 @@ parameters:
       What fraction of the optimal objective value should analyses like FVA, single gene knockout, and transcriptomic FBA be constrained at? Values must be between 0 and 1.
 
   detailed_logs:
-    ui_name: |
+    ui-name: |
       Detailed logs
     short-hint: |
       Whether to include detailed logs (including the full results of all FBA runs) when the app finishes running. (Use this for debugging purposes.)
