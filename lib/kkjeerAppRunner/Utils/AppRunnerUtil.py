@@ -65,3 +65,4 @@ class AppRunnerUtil:
     for r in kbparallel_result['results']:
       new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
       fba_refs.append(new_fba_ref)
+    return fba_refs
