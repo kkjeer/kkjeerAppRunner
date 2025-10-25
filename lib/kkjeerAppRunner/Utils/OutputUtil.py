@@ -20,7 +20,9 @@ class OutputUtil:
     table_headers = param_names + ['objective value', 'result ref']
     return table_headers
     
-  def createTableData(self, tasks):
+  # This method creates the data used to populate the StringDataTable file that will be written to the workspace.
+  # If the output file format changes, this method should be updated.
+  def createTableData(self, tasks, kbparallel_result):
     tableData = {
       'row_ids': [],
       'column_ids': [],
@@ -43,7 +45,17 @@ class OutputUtil:
       t = tasks[i]
       p = t['parameters']
 
+      # Get information from the fba result
+      r = kbparallel_result['results'][i]['final_job_state']['result'][0]
+      objective = r['objective']
+      new_fba_ref = r['new_fba_ref']
+
+      # The data for this row in the table is each parameter value in the task
+      # plus the output values from the fba result
       data = [str(p[name]) for name in param_names]
+      data.append(objective)
+      data.append(new_fba_ref)
+
       tableData['data'].append(data)
 
     return tableData
