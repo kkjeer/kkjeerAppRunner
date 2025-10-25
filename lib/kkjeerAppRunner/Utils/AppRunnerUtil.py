@@ -58,3 +58,10 @@ class AppRunnerUtil:
     parallel_runner = KBParallel(self.callback_url)
     result = parallel_runner.run_batch(batch_run_params)
     return result
+  
+  # This method returns the set of refs to output objects created by a KBParallel run.
+  def getFBARefs(self, kbparallel_result):
+    fba_refs = []
+    for r in kbparallel_result['results']:
+      new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
+      fba_refs.append(new_fba_ref)

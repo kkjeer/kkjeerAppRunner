@@ -40,6 +40,21 @@
       "text_options": {
         "validate_as": "float"
       }
+    },
+    {
+      "default_values": ["1"],
+      "advanced": true,
+      "checkbox_options": {
+        "unchecked_value": 0,
+        "checked_value": 1
+      },
+      "text_options": {
+        "valid_ws_types": []
+      },
+      "allow_multiple": false,
+      "optional": false,
+      "field_type": "checkbox",
+      "id": "detailed_logs"
     }
   ],
   "parameter-groups": [
@@ -68,6 +83,10 @@
         {
           "input_parameter": "param_group",
           "target_property": "param_group"
+        },
+        {
+          "input_parameter": "detailed_logs",
+          "target_property": "detailed_logs"
         }
       ],
       "output_mapping": [

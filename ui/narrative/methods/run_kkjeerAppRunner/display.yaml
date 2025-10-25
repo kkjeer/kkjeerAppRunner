@@ -15,8 +15,8 @@ icon: icon.png
 #
 suggestions:
   apps:
-    related: [app1, app2]
-    next: [app3, app4]
+    related: [TestFeedback]
+    next: []
 
 #
 # Configure the display and description of parameters
@@ -44,12 +44,18 @@ parameters:
     short-hint: |
       What fraction of the optimal objective value should analyses like FVA, single gene knockout, and transcriptomic FBA be constrained at? Values must be between 0 and 1.
 
+  detailed_logs:
+    ui_name: |
+      Detailed logs
+    short-hint: |
+      Whether to include detailed logs (including the full results of all FBA runs) when the app finishes running. (Use this for debugging purposes.)
+
 parameter-groups:
   param_group:
     ui-name: |
-      Param Group
+      FBA Parameters
     short-hint: |
-      Group containing UI elements
+      Parameters to pass to the runs of flux balance analysis.
 
 description: |
-  <p>Description goes here.</p>
+  <p>This app runs flux balance analysis multiple times (one for each set of parameters given).</p>

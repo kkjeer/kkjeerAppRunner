@@ -71,13 +71,7 @@ class kkjeerAppRunner:
         # Run the FBA apps using KBParallel
         tasks = runner.createTasks(params)
         kbparallel_result = runner.runKBParallel(tasks)
-
-        # Experiment with reading the results of the fba runs
-        fba_refs = []
-        for r in kbparallel_result['results']:
-          new_fba_ref = r['final_job_state']['result'][0]['new_fba_ref']
-          fba_refs.append(new_fba_ref)
-        fba_outputs = fileUtil.readFBAOutputs(ctx, fba_refs)
+        fba_refs = runner.getFBARefs(kbparallel_result)
 
         # Set of objects created during this app run (will be linked to in the report at the end)
         # To start, this includes a link for each FBA output created during the KBParallel run
@@ -93,14 +87,16 @@ class kkjeerAppRunner:
         # HTML table displayed to the user in the report at the end
         summary = outputUtil.createSummary(tasks, kbparallel_result)
 
-        # Extra message to help debug (optionally append to the text_message in the report below)
+        # Extra message to help debug (if detailed logs are enabled)
         debug_message = ''
-        # debug_message = f'<p>All params: {json.dumps(params, indent=2)}</p>'
-        debug_message += f'<p>KBParallel result:</p><pre>{json.dumps(kbparallel_result, indent=2)}</pre>'
-        if fba_outputs is not None:
-          debug_message += f'<p>FBA outputs:</p><pre>{json.dumps(fba_outputs, indent=2)}</pre>'
-        if previous_string_table is not None:
-          debug_message += f'<p>String table (created during previous app run):</p><pre>{json.dumps(previous_string_table, indent=2)}</pre>'
+        if params["detailed_logs"] == 1:
+          debug_message += '<br />'
+          debug_message += f'<p>KBParallel result:</p><pre>{json.dumps(kbparallel_result, indent=2)}</pre>'
+          fba_outputs = fileUtil.readFBAOutputs(ctx, fba_refs)
+          if fba_outputs is not None:
+            debug_message += f'<p>FBA outputs:</p><pre>{json.dumps(fba_outputs, indent=2)}</pre>'
+          if previous_string_table is not None:
+            debug_message += f'<p>String table (created during previous app run):</p><pre>{json.dumps(previous_string_table, indent=2)}</pre>'
 
         # Create the output report
         report = KBaseReport(self.callback_url)          
@@ -108,7 +104,7 @@ class kkjeerAppRunner:
           {
             'report': {
               'objects_created': objects_created,
-              'text_message': f'{summary}<br />{debug_message}'
+              'text_message': f'{summary}{debug_message}'
             },
             'workspace_name': params['workspace_name']
           }
