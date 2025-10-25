@@ -3,6 +3,7 @@
 import logging
 import os
 import json
+from pprint import pformat
 
 from installed_clients.KBaseReportClient import KBaseReport
 
@@ -58,7 +59,7 @@ class kkjeerAppRunner:
         # ctx is the context object
         # return variables are: output
         #BEGIN run_kkjeerAppRunner
-        logging.info('Starting AppRunner run function')
+        logging.info('Starting run_kkjeerAppRunner function. Params=' + pformat(params))
 
         # Create utilities
         runner = AppRunnerUtil(self.config)

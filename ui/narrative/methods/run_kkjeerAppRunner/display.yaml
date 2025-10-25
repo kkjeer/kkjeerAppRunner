@@ -53,7 +53,7 @@ parameters:
 parameter-groups:
   param_group:
     ui-name: |
-      FBA Parameters
+      FBA parameters
     short-hint: |
       Parameters to pass to the runs of flux balance analysis.
 
