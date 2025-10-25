@@ -42,7 +42,7 @@
       }
     },
     {
-      "default_values": ["1"],
+      "default_values": ["0"],
       "advanced": true,
       "checkbox_options": {
         "unchecked_value": 0,
