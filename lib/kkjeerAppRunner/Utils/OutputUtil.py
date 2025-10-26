@@ -19,6 +19,32 @@ class OutputUtil:
   def createTableHeaders(self, param_names):
     table_headers = param_names + ['objective value', 'result ref']
     return table_headers
+  
+  def createOutputJson(self, tasks, kbparallel_result):
+    result = {}
+
+    param_names = list(tasks[0]['parameters'].keys())
+    param_names = [item for item in param_names if item != "workspace"]
+
+    for i in range(0, len(tasks)):
+      key = f'row_{i}'
+
+      t = tasks[i]
+      p = t['parameters']
+
+      # Get information from the fba result
+      r = kbparallel_result['results'][i]['final_job_state']['result'][0]
+      objective = r['objective']
+      new_fba_ref = r['new_fba_ref']
+
+      obj = {}
+      for param in param_names:
+        obj[param] = p[param]
+      obj['objective_value'] = objective
+      obj['result_ref'] = new_fba_ref
+    
+      result[key] = obj
+    return result
     
   # This method creates the data used to populate the StringDataTable file that will be written to the workspace.
   # If the output file format changes, this method should be updated.

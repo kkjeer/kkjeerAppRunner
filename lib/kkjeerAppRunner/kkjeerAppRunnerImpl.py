@@ -78,6 +78,9 @@ class kkjeerAppRunner:
         # To start, this includes a link for each FBA output created during the KBParallel run
         objects_created = [{'ref': fba_refs[i], 'description': f'results of running fba configuration {i}'} for i in range(0, len(fba_refs))]
 
+        output_json = outputUtil.createOutputJson(tasks, kbparallel_result)
+        logging.info(f'output json: {json.dumps(output_json, indent=2)}')
+
         # Save the results into a string data table
         # (if successful, this will be another object linked to in the final report)
         tableData = outputUtil.createTableData(tasks, kbparallel_result)
