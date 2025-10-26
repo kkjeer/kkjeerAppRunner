@@ -48,43 +48,26 @@ class OutputUtil:
     
   # This method creates the data used to populate the StringDataTable file that will be written to the workspace.
   # If the output file format changes, this method should be updated.
-  def createTableData(self, tasks, kbparallel_result):
-    tableData = {
-      'row_ids': [],
-      'column_ids': [],
-      'row_labels': [],
-      'column_labels': [],
+  def createTableData(self, output_json):
+    rows = list(output_json.keys())
+    cols = list(output_json[rows[0]].keys())
+
+    table_data = {
+      'row_ids': rows,
+      'row_labels': rows,
+      'column_ids': cols,
+      'column_labels': cols,
       'row_groups_ids': [],
       'column_groups_ids': [],
       'data': []
     }
 
-    param_names = self.createParamNames(tasks)
-    table_headers = self.createTableHeaders(param_names)
-    tableData['column_ids'] = table_headers
-    tableData['column_labels'] = table_headers
+    for r in rows:
+      table_data['data'].append(list(output_json[r].values()))
 
-    for i in range(0, len(tasks)):
-      tableData['row_ids'].append(f'row{i}')
-      tableData['row_labels'].append(f'row {i}')
+    logging.info(f'table data: {table_data}')
 
-      t = tasks[i]
-      p = t['parameters']
-
-      # Get information from the fba result
-      r = kbparallel_result['results'][i]['final_job_state']['result'][0]
-      objective = r['objective']
-      new_fba_ref = r['new_fba_ref']
-
-      # The data for this row in the table is each parameter value in the task
-      # plus the output values from the fba result
-      data = [str(p[name]) for name in param_names]
-      data.append(str(objective))
-      data.append(new_fba_ref)
-
-      tableData['data'].append(data)
-
-    return tableData
+    return table_data
   
   def createSummary(self, tasks, kbparallel_result):
     param_names = self.createParamNames(tasks)
