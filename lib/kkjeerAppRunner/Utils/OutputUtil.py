@@ -31,7 +31,7 @@ class OutputUtil:
 
       obj = {}
       for param in param_names:
-        obj[param] = p[param]
+        obj[param] = str(p[param])
       obj['objective_value'] = str(objective)
       obj['result_ref'] = new_fba_ref
     
