@@ -53,9 +53,8 @@ class OutputUtil:
       # The data for this row in the table is each parameter value in the task
       # plus the output values from the fba result
       data = [str(p[name]) for name in param_names]
-      data.append(objective)
+      data.append(str(objective))
       data.append(new_fba_ref)
-      logging.info(f'data[{i}]: {data}')
 
       tableData['data'].append(data)
 
