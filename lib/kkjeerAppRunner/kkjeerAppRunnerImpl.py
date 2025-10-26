@@ -66,9 +66,6 @@ class kkjeerAppRunner:
         fileUtil = FileUtil(self.config)
         outputUtil = OutputUtil(self.config)
 
-        # Experiment with reading the string table created during one of the previous app runs
-        previous_string_table = fileUtil.readStringTable(ctx)
-        
         # Run the FBA apps using KBParallel
         tasks = runner.createTasks(params)
         kbparallel_result = runner.runKBParallel(tasks)
@@ -100,8 +97,6 @@ class kkjeerAppRunner:
           fba_outputs = fileUtil.readFBAOutputs(ctx, fba_refs)
           if fba_outputs is not None:
             debug_message += f'<p>FBA outputs:</p><pre>{json.dumps(fba_outputs, indent=2)}</pre>'
-          if previous_string_table is not None:
-            debug_message += f'<p>String table (created during previous app run):</p><pre>{json.dumps(previous_string_table, indent=2)}</pre>'
 
         # Create the output report
         report = KBaseReport(self.callback_url)          
