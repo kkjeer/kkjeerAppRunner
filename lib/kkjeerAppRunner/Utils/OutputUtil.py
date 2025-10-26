@@ -76,7 +76,7 @@ class OutputUtil:
 
     # Add each row to the table
     for i in range(0, len(rows)):
-      row = rows(i)
+      row = rows[i]
 
       # Open new row
       summary += "<tr style=\"border-top: 1px solid #505050;\">"
