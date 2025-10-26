@@ -10,16 +10,8 @@ class OutputUtil:
     self.shared_folder = config['scratch']
     logging.basicConfig(format='%(created)s %(levelname)s: %(message)s',
                         level=logging.INFO)
-    
-  def createParamNames(self, tasks):
-    param_names = list(tasks[0]['parameters'].keys())
-    param_names = [item for item in param_names if item != "workspace"]
-    return param_names
-    
-  def createTableHeaders(self, param_names):
-    table_headers = param_names + ['objective value', 'result ref']
-    return table_headers
   
+  # This method creates a JSON object that contains the parameters and outputs of each FBA run.
   def createOutputJson(self, tasks, kbparallel_result):
     result = {}
 
@@ -40,7 +32,7 @@ class OutputUtil:
       obj = {}
       for param in param_names:
         obj[param] = p[param]
-      obj['objective_value'] = objective
+      obj['objective_value'] = str(objective)
       obj['result_ref'] = new_fba_ref
     
       result[key] = obj
@@ -69,26 +61,22 @@ class OutputUtil:
 
     return table_data
   
-  def createSummary(self, tasks, kbparallel_result):
-    param_names = self.createParamNames(tasks)
-    table_headers = self.createTableHeaders(param_names)
+  # This method creates a stringified HTML table containing the results of the FBA runs.
+  # This table can be appended to the app summary that is displayed to the user.
+  def createSummary(self, output_json):
+    rows = list(output_json.keys())
+    cols = list(output_json[rows[0]].keys())
 
-    # Top row: name of each parameter plus the values from the fba result
+    # Top row: column names
     summary = "<table>"
     summary += "<tr>"
-    for h in table_headers:
+    for h in cols:
       summary += f'<th style="padding: 5px">{h}</th>'
     summary += "</tr>"
 
-    for i in range(0, len(tasks)):
-      # Get the parameters passed to the task
-      t = tasks[i]
-      p = t['parameters']
-
-      # Get information from the fba result
-      r = kbparallel_result['results'][i]['final_job_state']['result'][0]
-      objective = r['objective']
-      new_fba_ref = r['new_fba_ref']
+    # Add each row to the table
+    for i in range(0, len(rows)):
+      row = rows(i)
 
       # Open new row
       summary += "<tr style=\"border-top: 1px solid #505050;\">"
@@ -97,13 +85,9 @@ class OutputUtil:
       bg = "#f4f4f4" if i % 2 == 1 else "transparent"
       style = f'style="padding: 5px; background-color: {bg};"'
 
-      # Add each parameter the user configured via the UI as a column in the table
-      for name in param_names:
-        summary += f'<td {style}">{p[name]}</td>'
-      
-      # Add the last two columns (from the fba result)
-      summary += f'<td {style}>{objective}</td>'
-      summary += f'<td {style}>{new_fba_ref}</td>'
+      # Add the value for each column
+      for col in output_json[row]:
+        summary += f'<td {style}">{output_json[row][col]}</td>'
 
       # Close row
       summary += "</tr>"
