@@ -55,6 +55,7 @@ class OutputUtil:
       data = [str(p[name]) for name in param_names]
       data.append(objective)
       data.append(new_fba_ref)
+      logging.info(f'data[{i}]: {data}')
 
       tableData['data'].append(data)
 
