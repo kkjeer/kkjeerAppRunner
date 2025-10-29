@@ -97,10 +97,10 @@ class OutputUtil:
       'attributes': [
         {
           'attribute': 'column_A',
-          'attribute_ont_id': 'OBI_0500020',
+          'attribute_ont_id': '',
           'source': 'upload',
-          'unit': 'Hour',
-          'unit_ont_id': 'UO_0000032'
+          'unit': '',
+          'unit_ont_id': ''
         },
         {
           'attribute': 'column_B',
@@ -122,7 +122,6 @@ class OutputUtil:
         'row 1': ['3', '4', '5'],
         'row 2': ['6', '7', '8']
       },
-      'attributes': [],
       'ontology_mapping_method': 'User curation'
     }
     return mapping_data
