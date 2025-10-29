@@ -96,24 +96,24 @@ class OutputUtil:
     mapping_data = {
       'attributes': [
         {
-          'attribute': 'column A',
+          'attribute': 'column_A',
           'attribute_ont_id': 'OBI_0500020',
           'source': 'upload',
-          'unit': '',
+          'unit': 'Hour',
           'unit_ont_id': 'UO_0000032'
         },
         {
-          'attribute': 'column B',
+          'attribute': 'column_B',
           'attribute_ont_id': 'OBI_0500020',
           'source': 'upload',
-          'unit': '',
+          'unit': 'Hour',
           'unit_ont_id': 'UO_0000032'
         },
         {
-          'attribute': 'column C',
+          'attribute': 'column_C',
           'attribute_ont_id': 'OBI_0500020',
           'source': 'upload',
-          'unit': '',
+          'unit': 'Hour',
           'unit_ont_id': 'UO_0000032'
         },
       ],
