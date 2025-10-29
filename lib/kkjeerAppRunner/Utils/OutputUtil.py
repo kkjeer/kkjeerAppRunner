@@ -73,6 +73,27 @@ class OutputUtil:
     return sample_set_data
   
   def createAttributeMappingData(self, output_json):
+    col_attribute = {'attributes': [{'attribute': 'test_attribute_1',
+                                         'attribute_ont_id': 'OBI_0500020',
+                                         'source': 'upload',
+                                         'unit': 'Hour',
+                                         'unit_ont_id': 'UO_0000032'},
+                                        {'attribute': 'test_attribute_2',
+                                         'attribute_ont_id': 'CHEBI:9168',
+                                         'source': 'upload',
+                                         'unit': 'nanogram per milliliter',
+                                         'unit_ont_id': 'UO_0000275'},
+                                        {'attribute': 'test_attribute_3',
+                                         'attribute_ont_id': 'CHEBI:9168',
+                                         'source': 'upload',
+                                         'unit': 'nanogram per milliliter',
+                                         'unit_ont_id': 'UO_0000275'}],
+                         'instances': {'instance_1': ['1', '5', '9'],
+                                       'instance_2': ['2', '6', '10'],
+                                       'instance_3': ['3', '7', '11'],
+                                       'instance_4': ['4', '8', '12']},
+                         'ontology_mapping_method': 'User Curation'}
+    return col_attribute
     mapping_data = {
       'instances': {
         'row 0': ['column A', 'column B', 'column C'],

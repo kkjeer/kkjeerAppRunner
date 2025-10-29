@@ -38,6 +38,7 @@ class FileUtil:
       logging.error(f'could not read string table: {e}')
       return None
     
+  # This is a helper method for writing a file to the workspace.
   def writeFile(self, ctx, params, data, name, type, description):
     try:
       ws = Workspace(self.ws_url, token=ctx['token'])
@@ -66,52 +67,9 @@ class FileUtil:
   # so that other apps can read this data and ask the user for input based on the results.
   def writeStringTable(self, ctx, params, tableData):
     return self.writeFile(ctx, params, tableData, 'app-runner-table', 'MAK.StringDataTable', 'summary of results')
-    try:
-      ws = Workspace(self.ws_url, token=ctx['token'])
-      save_result = ws.save_objects(
-         {
-           'workspace': params['workspace_name'],
-           'objects': [
-              {
-                'name': 'app-runner-table',
-                'type': 'MAK.StringDataTable',
-                'data': tableData,
-              }
-            ]
-          })
-      logging.info(f'string data table: {save_result}')
-      id = save_result[0][0]
-      version = save_result[0][4]
-      workspace_id = save_result[0][6]
-      ref = f'{workspace_id}/{id}/{version}'
-      return {'ref': ref, 'description': 'summary of results'}
-    except Exception as e:
-      logging.error(f'failed to save string data table: {e}')
-      return None
     
   def writeSampleSet(self, ctx, params, sampleSetData):
     return self.writeFile(ctx, params, sampleSetData, 'app-runner-sample-set', 'KBaseSets.SampleSet', 'sample set summary')
-    try:
-      ws = Workspace(self.ws_url, token=ctx['token'])
-      save_result = ws.save_objects({
-        'workspace': params['workspace_name'],
-        'objects': [
-          {
-            'name': 'app-runner-sample-set',
-            'type': 'KBaseSets.SampleSet',
-            'data': sampleSetData
-          }
-        ]
-      })
-      logging.info(f'sample set: {save_result}')
-      id = save_result[0][0]
-      version = save_result[0][4]
-      workspace_id = save_result[0][6]
-      ref = f'{workspace_id}/{id}/{version}'
-      return {'ref': ref, 'description': 'sample set summary'}
-    except Exception as e:
-      logging.error(f'failed to save sample set: {e}')
-      return None
     
   def writeAttributeMappingFile(self, ctx, params, mappingData):
     return self.writeFile(ctx, params, mappingData, 'app-runner-attribute-mapping', 'KBaseExperiments.AttributeMapping', 'attribute mapping summary')
