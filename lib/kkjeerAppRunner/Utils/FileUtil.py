@@ -37,10 +37,35 @@ class FileUtil:
     except Exception as e:
       logging.error(f'could not read string table: {e}')
       return None
+    
+  def writeFile(self, ctx, params, data, name, type, description):
+    try:
+      ws = Workspace(self.ws_url, token=ctx['token'])
+      save_result = ws.save_objects(
+         {
+           'workspace': params['workspace_name'],
+           'objects': [
+              {
+                'name': name,
+                'type': type,
+                'data': data,
+              }
+            ]
+          })
+      logging.info(f'saved file {name} of type {type}: {save_result}')
+      id = save_result[0][0]
+      version = save_result[0][4]
+      workspace_id = save_result[0][6]
+      ref = f'{workspace_id}/{id}/{version}'
+      return {'ref': ref, 'description': description}
+    except Exception as e:
+      logging.error(f'failed to save file {name} of type {type}: {e}')
+      return None
 
   # This method writes the results of the fba runs into a string data table
   # so that other apps can read this data and ask the user for input based on the results.
   def writeStringTable(self, ctx, params, tableData):
+    return self.writeFile(ctx, params, tableData, 'app-runner-table', 'MAK.StringDataTable', 'summary of results')
     try:
       ws = Workspace(self.ws_url, token=ctx['token'])
       save_result = ws.save_objects(
@@ -65,6 +90,7 @@ class FileUtil:
       return None
     
   def writeSampleSet(self, ctx, params, sampleSetData):
+    return self.writeFile(ctx, params, sampleSetData, 'app-runner-sample-set', 'KBaseSets.SampleSet', 'sample set summary')
     try:
       ws = Workspace(self.ws_url, token=ctx['token'])
       save_result = ws.save_objects({
@@ -86,3 +112,6 @@ class FileUtil:
     except Exception as e:
       logging.error(f'failed to save sample set: {e}')
       return None
+    
+  def writeAttributeMappingFile(self, ctx, params, mappingData):
+    return self.writeFile(ctx, params, mappingData, 'app-runner-attribute-mapping', 'KBaseExperiments.AttributeMapping', 'attribute mapping summary')

@@ -1,5 +1,6 @@
 import logging
 import os
+import uuid
 
 # This class is responsible for constructing objects that will be used in output files and reports.
 class OutputUtil:
@@ -64,12 +65,20 @@ class OutputUtil:
   def createSampleSetData(self, output_json):
     sample_set_data = {
       'samples': [
-        {'id': '1', 'name': 'first sample', 'version': 1},
-        {'id': '2', 'name': 'second sample', 'version': 2}
+        {'id': str(uuid.uuid4()), 'name': 'first sample', 'version': 1},
+        {'id': str(uuid.uuid4()), 'name': 'second sample', 'version': 2}
       ],
       'description': 'my sample set'
     }
     return sample_set_data
+  
+  def createAttributeMappingData(self, output_json):
+    mapping_data = {
+      'instances': {},
+      'attributes': [],
+      'ontology_mapping_method': 'User curation'
+    }
+    return mapping_data
   
   # This method creates a stringified HTML table containing the results of the FBA runs.
   # This table can be appended to the app summary that is displayed to the user.
