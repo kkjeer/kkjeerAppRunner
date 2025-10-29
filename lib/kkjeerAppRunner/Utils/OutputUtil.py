@@ -97,24 +97,24 @@ class OutputUtil:
       'attributes': [
         {
           'attribute': 'column A',
-          'attribute_ont_id': '',
+          'attribute_ont_id': 'OBI_0500020',
           'source': 'upload',
           'unit': '',
-          'unit_ont_id': ''
+          'unit_ont_id': 'UO_0000032'
         },
         {
           'attribute': 'column B',
-          'attribute_ont_id': '',
+          'attribute_ont_id': 'OBI_0500020',
           'source': 'upload',
           'unit': '',
-          'unit_ont_id': ''
+          'unit_ont_id': 'UO_0000032'
         },
         {
           'attribute': 'column C',
-          'attribute_ont_id': '',
+          'attribute_ont_id': 'OBI_0500020',
           'source': 'upload',
           'unit': '',
-          'unit_ont_id': ''
+          'unit_ont_id': 'UO_0000032'
         },
       ],
       'instances': {
