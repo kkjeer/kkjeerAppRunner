@@ -74,7 +74,11 @@ class OutputUtil:
   
   def createAttributeMappingData(self, output_json):
     mapping_data = {
-      'instances': {},
+      'instances': {
+        'row 0': ['column A', 'column B', 'column C'],
+        'row 1': ['column first', 'column second', 'column third', 'column fourth'],
+        'row 2': ['column one', 'column two']
+      },
       'attributes': [],
       'ontology_mapping_method': 'User curation'
     }

@@ -87,10 +87,12 @@ class kkjeerAppRunner:
           objects_created.append(string_data_table)
 
         # Experiment: save the results into a sample set object
-        sample_set_data = outputUtil.createSampleSetData(output_json)
-        sample_set = fileUtil.writeSampleSet(ctx, params, sample_set_data)
-        if sample_set is not None:
-          objects_created.append(sample_set)
+        # This doesn't work - there's a problem with nonexistent uuids (they're randomly generated)
+        if False:
+          sample_set_data = outputUtil.createSampleSetData(output_json)
+          sample_set = fileUtil.writeSampleSet(ctx, params, sample_set_data)
+          if sample_set is not None:
+            objects_created.append(sample_set)
 
         # Experiment: save the results into an attribute mapping object
         mapping_data = outputUtil.createAttributeMappingData(output_json)
