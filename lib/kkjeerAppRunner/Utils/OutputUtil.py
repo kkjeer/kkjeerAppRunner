@@ -100,21 +100,21 @@ class OutputUtil:
           'attribute_ont_id': '',
           'source': 'upload',
           'unit': '',
-          'unit_ont-id': ''
+          'unit_ont_id': ''
         },
         {
           'attribute': 'column B',
           'attribute_ont_id': '',
           'source': 'upload',
           'unit': '',
-          'unit_ont-id': ''
+          'unit_ont_id': ''
         },
         {
           'attribute': 'column C',
           'attribute_ont_id': '',
           'source': 'upload',
           'unit': '',
-          'unit_ont-id': ''
+          'unit_ont_id': ''
         },
       ],
       'instances': {
