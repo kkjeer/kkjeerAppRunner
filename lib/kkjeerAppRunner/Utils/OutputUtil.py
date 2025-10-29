@@ -93,12 +93,34 @@ class OutputUtil:
                                        'instance_3': ['3', '7', '11'],
                                        'instance_4': ['4', '8', '12']},
                          'ontology_mapping_method': 'User Curation'}
-    return col_attribute
     mapping_data = {
+      'attributes': [
+        {
+          'attribute': 'column A',
+          'attribute_ont_id': '',
+          'source': 'upload',
+          'unit': '',
+          'unit_ont-id': ''
+        },
+        {
+          'attribute': 'column B',
+          'attribute_ont_id': '',
+          'source': 'upload',
+          'unit': '',
+          'unit_ont-id': ''
+        },
+        {
+          'attribute': 'column C',
+          'attribute_ont_id': '',
+          'source': 'upload',
+          'unit': '',
+          'unit_ont-id': ''
+        },
+      ],
       'instances': {
-        'row 0': ['column A', 'column B', 'column C'],
-        'row 1': ['column first', 'column second', 'column third'],
-        'row 2': ['column one', 'column two', 'column three']
+        'row 0': ['0', '1', '2'],
+        'row 1': ['3', '4', '5'],
+        'row 2': ['6', '7', '8']
       },
       'attributes': [],
       'ontology_mapping_method': 'User curation'
