@@ -63,3 +63,26 @@ class FileUtil:
     except Exception as e:
       logging.error(f'failed to save string data table: {e}')
       return None
+    
+  def writeSampleSet(self, ctx, params, sampleSetData):
+    try:
+      ws = Workspace(self.ws_url, token=ctx['token'])
+      save_result = ws.save_objects({
+        'workspace': params['workspace_name'],
+        'objects': [
+          {
+            'name': 'app-runner-sample-set',
+            'type': 'KBaseSets.SampleSet',
+            'data': sampleSetData
+          }
+        ]
+      })
+      logging.info(f'sample set: {save_result}')
+      id = save_result[0][0]
+      version = save_result[0][4]
+      workspace_id = save_result[0][6]
+      ref = f'{workspace_id}/{id}/{version}'
+      return {'ref': ref, 'description': 'sample set summary'}
+    except Exception as e:
+      logging.error(f'failed to save sample set: {e}')
+      return None

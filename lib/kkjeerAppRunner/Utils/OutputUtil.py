@@ -61,6 +61,16 @@ class OutputUtil:
 
     return table_data
   
+  def createSampleSetData(self, output_json):
+    sample_set_data = {
+      'samples': [
+        {'id': '1', 'name': 'first sample', 'version': 1},
+        {'id': '2', 'name': 'second sample', 'version': 2}
+      ],
+      'description': 'my sample set'
+    }
+    return sample_set_data
+  
   # This method creates a stringified HTML table containing the results of the FBA runs.
   # This table can be appended to the app summary that is displayed to the user.
   def createSummary(self, output_json):

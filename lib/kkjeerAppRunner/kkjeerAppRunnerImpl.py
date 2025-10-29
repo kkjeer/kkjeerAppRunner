@@ -86,6 +86,12 @@ class kkjeerAppRunner:
         if string_data_table is not None:
           objects_created.append(string_data_table)
 
+        # Experiment: save the results into a sample set object
+        sample_set_data = outputUtil.createSampleSetData(output_json)
+        sample_set = fileUtil.writeSampleSet(ctx, params, sample_set_data)
+        if sample_set is not None:
+          objects_created.append(sample_set)
+
         # HTML table displayed to the user in the report at the end
         summary = outputUtil.createSummary(output_json)
 
