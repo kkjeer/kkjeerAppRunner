@@ -65,8 +65,8 @@ class OutputUtil:
   def createSampleSetData(self, output_json):
     sample_set_data = {
       'samples': [
-        {'name': 'first sample', 'version': 1},
-        {'name': 'second sample', 'version': 2}
+        {'id': 'f193dc1e-f678-48d9-a5a4-8be6bd0b699d', 'name': 'first sample', 'version': 1},
+        {'id': 'f193dc1e-f678-48d9-a5a4-8be6bd0b699d', 'name': 'second sample', 'version': 2}
       ],
       'description': 'my sample set'
     }
