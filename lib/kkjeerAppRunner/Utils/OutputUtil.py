@@ -20,7 +20,7 @@ class OutputUtil:
     param_names = [item for item in param_names if item != "workspace"]
 
     for i in range(0, len(tasks)):
-      key = f'row_{i}'
+      key = f'Run {i}'
 
       t = tasks[i]
       p = t['parameters']
@@ -65,8 +65,8 @@ class OutputUtil:
   def createSampleSetData(self, output_json):
     sample_set_data = {
       'samples': [
-        {'id': str(uuid.uuid4()), 'name': 'first sample', 'version': 1},
-        {'id': str(uuid.uuid4()), 'name': 'second sample', 'version': 2}
+        {'name': 'first sample', 'version': 1},
+        {'name': 'second sample', 'version': 2}
       ],
       'description': 'my sample set'
     }
@@ -81,10 +81,8 @@ class OutputUtil:
     mapping_data = {
       'attributes': [
         {'attribute': row, 
-         'attribute_ont_id': '', 
          'source': 'upload', 
          'unit': output_json[row]['objective_value'], 
-         'unit_ont_id': ''
         } for row in rows],
       'instances': instances,
       'ontology_mapping_method': 'User curation'
@@ -118,35 +116,7 @@ class OutputUtil:
     for key in output_json:
       instances[key] = [output_json[key][param] for param in output_json[key]]
     mapping_data = {
-      'attributes': [
-        {
-          'attribute': 'column_A',
-          'attribute_ont_id': '',
-          'source': 'upload',
-          'unit': '',
-          'unit_ont_id': ''
-        },
-        {
-          'attribute': 'column_B',
-          'attribute_ont_id': 'OBI_0500020',
-          'source': 'upload',
-          'unit': 'Hour',
-          'unit_ont_id': 'UO_0000032'
-        },
-        {
-          'attribute': 'column_C',
-          'attribute_ont_id': 'OBI_0500020',
-          'source': 'upload',
-          'unit': 'Hour',
-          'unit_ont_id': 'UO_0000032'
-        },
-      ],
-      'instances': {
-        'row 0': ['0', '1', '2'],
-        'row 1': ['3', '4', '5'],
-        'row 2': ['6', '7', '8']
-      },
-      'attributes': [{'attribute': param, 'attribute_ont_id': '', 'source': 'upload', 'unit': '', 'unit_ont_id': ''} for param in cols],
+      'attributes': [{'attribute': param, 'source': 'upload', 'unit': ''} for param in cols],
       'instances': instances,
       'ontology_mapping_method': 'User curation'
     }
