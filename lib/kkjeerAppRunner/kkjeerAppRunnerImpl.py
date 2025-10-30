@@ -81,20 +81,21 @@ class kkjeerAppRunner:
 
         # Save the results into a string data table
         # (if successful, this will be another object linked to in the final report)
-        table_data = outputUtil.createTableData(output_json)
-        string_data_table = fileUtil.writeStringTable(ctx, params, table_data)
-        if string_data_table is not None:
-          objects_created.append(string_data_table)
+        if False:
+          table_data = outputUtil.createTableData(output_json)
+          string_data_table = fileUtil.writeStringTable(ctx, params, table_data)
+          if string_data_table is not None:
+            objects_created.append(string_data_table)
 
         # Experiment: save the results into a sample set object
-        # This doesn't work - there's a problem with nonexistent uuids (they're randomly generated)
+        # This doesn't work - there's a problem with the id fields (these need to be ids of actual objects that exist?)
         if True:
           sample_set_data = outputUtil.createSampleSetData(output_json)
           sample_set = fileUtil.writeSampleSet(ctx, params, sample_set_data)
           if sample_set is not None:
             objects_created.append(sample_set)
 
-        # Experiment: save the results into an attribute mapping object
+        # Save the results into an attribute mapping object
         mapping_data = outputUtil.createFlippedAttributeMappingData(output_json)
         attribute_mapping = fileUtil.writeAttributeMappingFile(ctx, params, mapping_data)
         if attribute_mapping is not None:

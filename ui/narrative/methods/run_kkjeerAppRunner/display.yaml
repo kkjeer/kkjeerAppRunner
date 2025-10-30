@@ -44,6 +44,14 @@ parameters:
     short-hint: |
       What fraction of the optimal objective value should analyses like FVA, single gene knockout, and transcriptomic FBA be constrained at? Values must be between 0 and 1.
 
+  output_id:
+    ui-name: |
+      Output FBA run
+    short-hint: |
+      Inputs and outputs for each FBA run
+    placeholder: |
+      ID for saving results
+
   detailed_logs:
     ui-name: |
       Detailed logs
