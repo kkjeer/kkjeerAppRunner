@@ -73,6 +73,8 @@ class OutputUtil:
     return sample_set_data
   
   def createAttributeMappingData(self, output_json):
+    rows = list(output_json.keys())
+    cols = list(output_json[rows[0]].keys())
     col_attribute = {'attributes': [{'attribute': 'test_attribute_1',
                                          'attribute_ont_id': 'OBI_0500020',
                                          'source': 'upload',
@@ -93,6 +95,9 @@ class OutputUtil:
                                        'instance_3': ['3', '7', '11'],
                                        'instance_4': ['4', '8', '12']},
                          'ontology_mapping_method': 'User Curation'}
+    instances = {}
+    for key in output_json:
+      instances[key] = [output_json[key][param] for param in output_json[key]]
     mapping_data = {
       'attributes': [
         {
@@ -122,6 +127,8 @@ class OutputUtil:
         'row 1': ['3', '4', '5'],
         'row 2': ['6', '7', '8']
       },
+      'attributes': [{'attribute': param, 'attribute_ont_id': '', 'source': 'upload', 'unit': '', 'unit_ont_id': ''} for param in cols],
+      'instances': instances,
       'ontology_mapping_method': 'User curation'
     }
     return mapping_data
