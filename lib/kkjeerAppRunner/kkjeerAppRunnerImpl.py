@@ -95,7 +95,7 @@ class kkjeerAppRunner:
             objects_created.append(sample_set)
 
         # Experiment: save the results into an attribute mapping object
-        mapping_data = outputUtil.createAttributeMappingData(output_json)
+        mapping_data = outputUtil.createFlippedAttributeMappingData(output_json)
         attribute_mapping = fileUtil.writeAttributeMappingFile(ctx, params, mapping_data)
         if attribute_mapping is not None:
           objects_created.append(attribute_mapping)

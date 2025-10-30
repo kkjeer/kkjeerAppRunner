@@ -72,6 +72,25 @@ class OutputUtil:
     }
     return sample_set_data
   
+  def createFlippedAttributeMappingData(self, output_json):
+    rows = list(output_json.keys())
+    cols = list(output_json[rows[0]].keys())
+    instances = {}
+    for c in cols:
+      instances[c] = [output_json[key][c] for key in output_json]
+    mapping_data = {
+      'attributes': [
+        {'attribute': row, 
+         'attribute_ont_id': '', 
+         'source': 'upload', 
+         'unit': output_json[row]['objective_value'], 
+         'unit_ont_id': ''
+        } for row in rows],
+      'instances': instances,
+      'ontology_mapping_method': 'User curation'
+    }
+    return mapping_data
+  
   def createAttributeMappingData(self, output_json):
     rows = list(output_json.keys())
     cols = list(output_json[rows[0]].keys())
