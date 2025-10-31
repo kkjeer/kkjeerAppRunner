@@ -29,9 +29,9 @@ class AppRunnerUtil:
         'function_name': 'run_flux_balance_analysis',
         'version': 'release',
         'parameters': {
-          'fba_output_id': f'apprunner-fba-output-{i}',
           'target_reaction': '4HBTE_c0',
           **params['param_group'][i],
+          'fba_output_id': params['param_group'][i] or f'apprunner-fba-output-{i}',
           'workspace': params['workspace_name']
         }
       }

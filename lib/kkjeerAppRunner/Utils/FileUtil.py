@@ -72,5 +72,5 @@ class FileUtil:
     return self.writeFile(ctx, params, sampleSetData, 'app-runner-sample-set', 'KBaseSets.SampleSet', 'sample set summary')
     
   def writeAttributeMappingFile(self, ctx, params, mapping_data, file_name):
-    name = 'app-runner-output' if file_name is None or file_name == '' else file_name
+    name = file_name or 'app-runner-output'
     return self.writeFile(ctx, params, mapping_data, name, 'KBaseExperiments.AttributeMapping', 'summary of results')
