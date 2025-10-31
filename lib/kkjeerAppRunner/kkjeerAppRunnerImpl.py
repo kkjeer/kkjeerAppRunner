@@ -89,7 +89,7 @@ class kkjeerAppRunner:
 
         # Experiment: save the results into a sample set object
         # This doesn't work - there's a problem with the id fields (these need to be ids of actual objects that exist?)
-        if True:
+        if False:
           sample_set_data = outputUtil.createSampleSetData(output_json)
           sample_set = fileUtil.writeSampleSet(ctx, params, sample_set_data)
           if sample_set is not None:

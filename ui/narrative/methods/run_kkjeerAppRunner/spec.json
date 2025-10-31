@@ -48,10 +48,7 @@
       "optional": true,
       "allow_multiple": false,
       "field_type": "text",
-      "text_options": {
-        "valid_ws_types": ["KBaseFBA.FBA"],
-        "is_output_name": true
-      }
+      "text_options": {}
     },
     {
       "id": "output_id",
@@ -130,10 +127,6 @@
         {
           "service_method_output_path": [0, "report_ref"],
           "target_property": "report_ref"
-        },
-        {
-          "input_parameter": "fba_output_id",
-          "target_property": "obj"
         },
         {
           "input_parameter": "output_id",
