@@ -72,12 +72,7 @@
   "parameter-groups": [
     {
       "id": "param_group",
-      "parameters": [
-        "fbamodel_id",
-        "media_id",
-        "activation_coefficient",
-        "fba_output_id"
-      ],
+      "parameters": ["fbamodel_id", "media_id", "activation_coefficient"],
       "optional": false,
       "allow_multiple": true,
       "with_border": true
