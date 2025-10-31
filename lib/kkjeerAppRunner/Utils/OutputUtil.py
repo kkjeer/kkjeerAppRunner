@@ -20,10 +20,12 @@ class OutputUtil:
     param_names = [item for item in param_names if item != "workspace"]
 
     for i in range(0, len(tasks)):
-      key = f'Run {i}'
-
       t = tasks[i]
       p = t['parameters']
+
+      key = p['fba_output_id']
+      if key is None or key == '':
+        key = f'Run {i}'
 
       # Get information from the fba result
       r = kbparallel_result['results'][i]['final_job_state']['result'][0]
