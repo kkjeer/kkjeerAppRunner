@@ -42,15 +42,6 @@
       }
     },
     {
-      "id": "fba_output_id",
-      "default_values": [""],
-      "advanced": false,
-      "optional": true,
-      "allow_multiple": false,
-      "field_type": "text",
-      "text_options": {}
-    },
-    {
       "id": "output_id",
       "default_values": ["app-runner-output"],
       "advanced": false,

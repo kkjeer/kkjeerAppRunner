@@ -44,14 +44,6 @@ parameters:
     short-hint: |
       What fraction of the optimal objective value should analyses like FVA, single gene knockout, and transcriptomic FBA be constrained at? Values must be between 0 and 1.
 
-  fba_output_id:
-    ui-name: |
-      Output FBA Result
-    short-hint: |
-      The fluxes for all reactions in the metabolic model and the predicted growth of the biomass according to the FBA model
-    placeholder: |
-      ID for saving FBA results
-
   output_id:
     ui-name: |
       Output FBA run
