@@ -31,7 +31,7 @@ class AppRunnerUtil:
         'parameters': {
           'target_reaction': '4HBTE_c0',
           **params['param_group'][i],
-          'fba_output_id': params['param_group'][i] or f'apprunner-fba-output-{i}',
+          'fba_output_id': params['param_group'][i]['fba_output_id'] or f'apprunner-fba-output-{i}',
           'workspace': params['workspace_name']
         }
       }
